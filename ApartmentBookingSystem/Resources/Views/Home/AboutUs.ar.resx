@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+	
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>1.3</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="PageTitle" xml:space="preserve">
+    <value>من نحن</value>
+  </data>
+
+	<data name="AboutBadge" xml:space="preserve">
+    <value>مدينتي • أسلوب حياة فاخر في الإسكندرية</value>
+  </data>
+	<data name="AboutTitle" xml:space="preserve">
+    <value>مدينتي اسم موثوق في الشقق المفروشة الفاخرة في الإسكندرية، بخبرة تتجاوز 10 سنوات</value>
+  </data>
+	<data name="AboutSubtitle" xml:space="preserve">
+    <value>في مدينتي، نقدم مجموعة مميزة من الشقق المفروشة في مختلف أنحاء الإسكندرية، تشمل شقق الصف الأول على البحر، وشقق الصف الثاني الفاخرة بفرش فندقي راقٍ وراحة عالية وضيافة متميزة.</value>
+  </data>
+
+	<data name="Stat1Number" xml:space="preserve">
+    <value>+10</value>
+  </data>
+	<data name="Stat1Label" xml:space="preserve">
+    <value>سنوات من الخبرة في الشقق المفروشة</value>
+  </data>
+
+	<data name="Stat2Number" xml:space="preserve">
+    <value>Alex</value>
+  </data>
+	<data name="Stat2Label" xml:space="preserve">
+    <value>شقق في أهم مناطق الإسكندرية كلها</value>
+  </data>
+
+	<data name="Stat3Number" xml:space="preserve">
+    <value>1st</value>
+  </data>
+	<data name="Stat3Label" xml:space="preserve">
+    <value>شقق صف أول على البحر في مواقع مميزة</value>
+  </data>
+
+	<data name="Stat4Number" xml:space="preserve">
+    <value>Lux</value>
+  </data>
+	<data name="Stat4Label" xml:space="preserve">
+    <value>شقق صف ثاني فاخرة بفرش فندقي</value>
+  </data>
+
+	<data name="WhoWeAreTitle" xml:space="preserve">
+    <value>من نحن</value>
+  </data>
+	<data name="WhoWeAreText" xml:space="preserve">
+    <value>بخبرة تزيد عن عشر سنوات، أصبحت مدينتي وجهة موثوقة للشقق المفروشة الفاخرة في الإسكندرية. تضم مجموعتنا شققًا في مواقع مميزة بجميع أنحاء المدينة، سواء كنت تبحث عن إقامة مباشرة على البحر أو شقة صف ثانٍ فاخرة بفرش فندقي أنيق وأجواء هادئة وراقية.</value>
+  </data>
+
+	<data name="StoryChip" xml:space="preserve">
+    <value>ضيافة فاخرة</value>
+  </data>
+	<data name="StoryTitle" xml:space="preserve">
+    <value>في مدينتي، نحن لا نقدم شققًا فقط، بل نصنع تجربة إقامة فاخرة متكاملة</value>
+  </data>
+	<data name="StoryText" xml:space="preserve">
+    <value>تركيزنا لا يقتصر على الموقع فقط، بل يشمل الجودة والراحة وطريقة تقديم المكان. نحن نوفر بعناية شققًا تناسب أنماط الحياة المختلفة، من وحدات الصف الأول بإطلالات بحرية مبهرة إلى شقق الصف الثاني الفاخرة، وكلها مجهزة بتشطيبات أنيقة وفرش فندقي راقٍ لتقديم إقامة مريحة ومميزة لا تُنسى.</value>
+  </data>
+
+	<data name="CollectionTitle" xml:space="preserve">
+    <value>مجموعة شققنا</value>
+  </data>
+	<data name="CollectionText" xml:space="preserve">
+    <value>نوفر مجموعة واسعة من الشقق المفروشة في مختلف أنحاء الإسكندرية لتناسب الأذواق والاحتياجات المختلفة، مع الحفاظ دائمًا على مستوى عالٍ من الأناقة والنظافة والضيافة الراقية.</value>
+  </data>
+
+	<data name="Category1Badge" xml:space="preserve">
+    <value>الصف الأول على البحر</value>
+  </data>
+	<data name="Category1Title" xml:space="preserve">
+    <value>شقق بإطلالة بحرية مباشرة في أجمل مناطق الإسكندرية</value>
+  </data>
+	<data name="Category1Text" xml:space="preserve">
+    <value>توفر شقق الصف الأول إطلالات مباشرة على البحر وبلكونات مفتوحة وهواءً منعشًا وإحساسًا فريدًا بالهدوء والفخامة. وهي مثالية للضيوف الباحثين عن تجربة ساحلية راقية ومناظر لا تُنسى.</value>
+  </data>
+	<data name="Category1Point1" xml:space="preserve">
+    <value>إطلالات بحرية مباشرة ومفتوحة</value>
+  </data>
+	<data name="Category1Point2" xml:space="preserve">
+    <value>مواقع مميزة في أنحاء الإسكندرية</value>
+  </data>
+	<data name="Category1Point3" xml:space="preserve">
+    <value>بلكونات أنيقة ومساحات مشرقة</value>
+  </data>
+	<data name="Category1Point4" xml:space="preserve">
+    <value>مثالية لإقامة هادئة وراقية</value>
+  </data>
+
+	<data name="Category2Badge" xml:space="preserve">
+    <value>الصف الثاني الفاخر</value>
+  </data>
+	<data name="Category2Title" xml:space="preserve">
+    <value>شقق فاخرة مفروشة بتشطيب راقٍ وفرش فندقي وراحة مميزة</value>
+  </data>
+	<data name="Category2Text" xml:space="preserve">
+    <value>تجمع شقق الصف الثاني الفاخرة بين الخصوصية والتصميم الأنيق والفرش الفندقي الراقي. وهي مناسبة للضيوف الذين يبحثون عن إقامة عالية المستوى تجمع بين الأناقة والراحة والقيمة الممتازة.</value>
+  </data>
+	<data name="Category2Point1" xml:space="preserve">
+    <value>ديكورات داخلية مفروشة بشكل فاخر</value>
+  </data>
+	<data name="Category2Point2" xml:space="preserve">
+    <value>فرش فندقي وتفاصيل راقية</value>
+  </data>
+	<data name="Category2Point3" xml:space="preserve">
+    <value>أجواء مريحة وأنيقة</value>
+  </data>
+	<data name="Category2Point4" xml:space="preserve">
+    <value>جودة عالية في مواقع متعددة</value>
+  </data>
+
+	<data name="WhyChooseTitle" xml:space="preserve">
+    <value>لماذا يختارنا الضيوف</value>
+  </data>
+	<data name="WhyChooseText" xml:space="preserve">
+    <value>خبرتنا وتنوع اختياراتنا واهتمامنا بالتفاصيل تجعلنا خيارًا موثوقًا للضيوف الباحثين عن شقق مفروشة فاخرة في الإسكندرية.</value>
+  </data>
+
+	<data name="Why1Title" xml:space="preserve">
+    <value>تنوع كبير</value>
+  </data>
+	<data name="Why1Text" xml:space="preserve">
+    <value>مجموعة كبيرة من الشقق في مختلف أنحاء الإسكندرية لتناسب احتياجات وتفضيلات مختلفة.</value>
+  </data>
+
+	<data name="Why2Title" xml:space="preserve">
+    <value>مواقع بحرية مميزة</value>
+  </data>
+	<data name="Why2Text" xml:space="preserve">
+    <value>من شقق الصف الأول على البحر إلى الوحدات الفاخرة القريبة في مناطق راقية.</value>
+  </data>
+
+	<data name="Why3Title" xml:space="preserve">
+    <value>فرش فندقي راقٍ</value>
+  </data>
+	<data name="Why3Text" xml:space="preserve">
+    <value>أثاث مختار بعناية وتصميم داخلي أنيق وأجواء راقية في كل إقامة.</value>
+  </data>
+
+	<data name="Why4Title" xml:space="preserve">
+    <value>خبرة موثوقة</value>
+  </data>
+	<data name="Why4Text" xml:space="preserve">
+    <value>أكثر من عشر سنوات من الخبرة في خدمة الضيوف بجودة واحترافية واهتمام.</value>
+  </data>
+
+	<data name="CtaTitle" xml:space="preserve">
+    <value>اكتشف إقامتك المثالية في الإسكندرية</value>
+  </data>
+	<data name="CtaText" xml:space="preserve">
+    <value>سواء كنت تبحث عن شقة صف أول على البحر أو وحدة فاخرة مفروشة بفرش فندقي، فنحن مستعدون لمساعدتك في اختيار الأنسب لك.</value>
+  </data>
+	<data name="CtaButton" xml:space="preserve">
+    <value>تواصل معنا</value>
+  </data>
+</root>

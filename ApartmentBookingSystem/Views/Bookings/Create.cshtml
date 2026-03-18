@@ -1,0 +1,710 @@
+﻿@model ApartmentBookingSystem.ViewModels.BookingCreateViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["BookApartmentTitle"];
+    var mainImage = Model.Apartment.Images != null && Model.Apartment.Images.Any()
+        ? Model.Apartment.Images.First().ImageUrl
+        : "";
+}
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<style>
+    body {
+        background: linear-gradient(180deg, #fffaf3 0%, #f7fcff 100%);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .booking-page {
+        padding: 35px 0 50px;
+    }
+
+    .booking-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 8px;
+    }
+
+    .booking-subtitle {
+        color: #6b7280;
+        margin-bottom: 30px;
+    }
+
+    .main-card, .side-card {
+        background: #fff;
+        border: none;
+        border-radius: 26px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    }
+
+    .main-card {
+        padding: 28px;
+    }
+
+    .side-card {
+        padding: 22px;
+        position: sticky;
+        top: 100px;
+    }
+
+    .apartment-preview {
+        display: flex;
+        gap: 18px;
+        align-items: center;
+        background: linear-gradient(135deg, #f8fbff, #fff8ef);
+        border-radius: 20px;
+        padding: 16px;
+        margin-bottom: 25px;
+    }
+
+        .apartment-preview img {
+            width: 180px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 18px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        }
+
+    .apartment-title {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 8px;
+    }
+
+    .apartment-meta {
+        color: #6b7280;
+        margin-bottom: 6px;
+    }
+
+    .price-day {
+        color: #0f766e;
+        font-size: 1.1rem;
+        font-weight: 800;
+    }
+
+    .section-heading {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 16px;
+    }
+
+    .form-label {
+        font-weight: 700;
+        color: #374151;
+        margin-bottom: 8px;
+    }
+
+    .form-control, .form-select {
+        border-radius: 14px;
+        padding: 12px 14px;
+        border: 1px solid #d1d5db;
+    }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #29b6f6;
+            box-shadow: 0 0 0 0.2rem rgba(41, 182, 246, 0.15);
+        }
+
+    .legend-box {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.92rem;
+        color: #4b5563;
+        background: #f9fafb;
+        padding: 8px 12px;
+        border-radius: 999px;
+    }
+
+    .legend-color {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+    }
+
+    .available-color {
+        background: #22c55e;
+    }
+
+    .unavailable-color {
+        background: #ef4444;
+    }
+
+    .selected-color {
+        background: #3b82f6;
+    }
+
+    .payment-info-box {
+        display: none;
+        background: linear-gradient(135deg, #f8fbff, #fff8ef);
+        border-radius: 18px;
+        padding: 18px;
+        margin-top: 16px;
+        border: 1px solid #e5e7eb;
+    }
+
+        .payment-info-box.show {
+            display: block;
+        }
+
+    .payment-info-title {
+        font-weight: 800;
+        color: #111827;
+        margin-bottom: 10px;
+    }
+
+    .payment-line {
+        margin-bottom: 8px;
+        color: #4b5563;
+    }
+
+        .payment-line strong {
+            color: #111827;
+        }
+
+    .summary-box {
+        background: linear-gradient(135deg, #f8fbff, #fff8ef);
+        border-radius: 18px;
+        padding: 18px;
+        margin-bottom: 18px;
+    }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 12px;
+        color: #4b5563;
+        gap: 10px;
+    }
+
+        .summary-row strong {
+            color: #111827;
+            text-align: right;
+        }
+
+    .summary-total {
+        border-top: 1px solid #e5e7eb;
+        margin-top: 10px;
+        padding-top: 14px;
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: #111827;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .book-btn {
+        width: 100%;
+        border: none;
+        border-radius: 16px;
+        padding: 14px 18px;
+        background: linear-gradient(135deg, #29b6f6, #26c6da);
+        color: #fff;
+        font-weight: 800;
+        transition: 0.3s ease;
+        box-shadow: 0 12px 24px rgba(41, 182, 246, 0.26);
+    }
+
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 28px rgba(41, 182, 246, 0.34);
+        }
+
+        .book-btn:disabled {
+            background: #9ca3af;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+    .availability-message {
+        font-weight: 700;
+        margin-top: 10px;
+    }
+
+    .text-success-custom {
+        color: #16a34a;
+    }
+
+    .text-danger-custom {
+        color: #dc2626;
+    }
+
+    .flatpickr-day.booked-date {
+        background: #ef4444 !important;
+        color: white !important;
+        border-color: #ef4444 !important;
+    }
+
+    .flatpickr-day.available-date {
+        background: #dcfce7 !important;
+        color: #166534 !important;
+        border-color: #bbf7d0 !important;
+    }
+
+    .flatpickr-day.selected,
+    .flatpickr-day.startRange,
+    .flatpickr-day.endRange,
+    .flatpickr-day.inRange {
+        background: #3b82f6 !important;
+        color: white !important;
+        border-color: #3b82f6 !important;
+    }
+
+    .flatpickr-day.turnover-date:not(.selected):not(.inRange):not(.endRange):not(.startRange) {
+        background: linear-gradient(to right, #ef4444 50%, #22c55e 50%) !important;
+        color: white !important;
+        border-color: #d1d5db !important;
+    }
+
+    .upload-note {
+        color: #6b7280;
+        font-size: 0.92rem;
+        margin-top: 8px;
+    }
+
+    @@media (max-width: 991px) {
+        .side-card {
+            position: static;
+            margin-top: 20px;
+        }
+
+        .apartment-preview {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+            .apartment-preview img {
+                width: 100%;
+                height: 220px;
+            }
+    }
+
+    .confirmation-note {
+        background: linear-gradient(135deg, #fff8e7, #fff3d6);
+        border: 1px solid #fde68a;
+        color: #92400e;
+        padding: 14px 16px;
+        border-radius: 16px;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-top: 12px;
+    }
+
+        .confirmation-note strong {
+            color: #78350f;
+        }
+
+    .checkout-color {
+        background: #f59e0b;
+    }
+
+    .flatpickr-day.checkout-only-date:not(.selected):not(.inRange):not(.endRange):not(.startRange) {
+        background: #fef3c7 !important;
+        color: #92400e !important;
+        border-color: #f59e0b !important;
+        font-weight: 700;
+    }
+
+</style>
+
+<div class="container booking-page">
+    <h2 class="booking-title">@Localizer["CompleteYourBooking"]</h2>
+    <p class="booking-subtitle">@Localizer["BookingSubtitle"]</p>
+
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="main-card">
+                <div class="apartment-preview">
+                    @if (!string.IsNullOrEmpty(mainImage))
+                    {
+                        <img src="@mainImage" alt="@Model.Apartment.Title" />
+                    }
+
+                    <div>
+                        <div class="apartment-title">@Model.Apartment.Title</div>
+                        <div class="apartment-meta">📍 @Model.Apartment.City - @Model.Apartment.Area</div>
+                        <div class="apartment-meta">🏠 @Model.Apartment.Rooms Rooms • 🚿 @Model.Apartment.Bathrooms Bathrooms • 👥 @Model.Apartment.MaxGuests Guests</div>
+                        <div class="price-day">@Model.Apartment.PricePerNight EGP / night</div>
+                    </div>
+                </div>
+
+                <form asp-action="Create" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="ApartmentId" />
+                    <input type="hidden" id="pricePerNight" value="@Model.Apartment.PricePerNight" />
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <h4 class="section-heading">@Localizer["SelectDates"]</h4>
+
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label asp-for="CheckInDate" class="form-label">@Localizer["CheckIn"]</label>
+                            <input asp-for="CheckInDate" class="form-control" id="checkInDate" autocomplete="off" />
+                            <span asp-validation-for="CheckInDate" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="CheckOutDate" class="form-label">@Localizer["CheckOut"]</label>
+                            <input asp-for="CheckOutDate" class="form-control" id="checkOutDate" autocomplete="off" />
+                            <span asp-validation-for="CheckOutDate" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="legend-box">
+                        <div class="legend-item">
+                            <span class="legend-color available-color"></span>
+                            @Localizer["Available"]
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color unavailable-color"></span>
+                            @Localizer["Unavailable"]
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color checkout-color"></span>
+                            @Localizer["CheckoutOnly"]
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color selected-color"></span>
+                            @Localizer["Selected"]
+                        </div>
+
+                    </div>
+
+                    <div id="availabilityMessage" class="availability-message"></div>
+
+                    <hr class="my-4" />
+
+                    <h4 class="section-heading">@Localizer["PaymentMethodSection"]</h4>
+
+                    <div class="mb-3">
+                        <label asp-for="PaymentMethod" class="form-label">@Localizer["ChoosePaymentMethod"]</label>
+                        <select asp-for="PaymentMethod" class="form-select" id="paymentMethod">
+                            <option value="">@Localizer["SelectPaymentMethodOption"]</option>
+                            <option value="VodafoneCash">Vodafone Cash</option>
+                            <option value="InstaPay">InstaPay</option>
+                        </select>
+                        <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+                    </div>
+
+                    <div id="paymentInfoBox" class="payment-info-box">
+                        <div class="payment-info-title" id="paymentInfoTitle">@Localizer["PaymentDetails"]</div>
+                        <div class="payment-line">
+                            <strong>@Localizer["TransferTo"]</strong> <span id="transferTo"></span>
+                        </div>
+                        <div class="payment-line">
+                            <strong>@Localizer["AccountOrWalletNumber"]</strong> <span id="transferNumber"></span>
+                        </div>
+                        <div class="payment-line">
+                            <strong>@Localizer["SendScreenshotTo"]</strong> <span id="screenshotPhone"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="mt-3">
+                        <label asp-for="PaymentProofImage" class="form-label">@Localizer["UploadPaymentScreenshot"]</label>
+                        <input asp-for="PaymentProofImage" type="file" class="form-control" accept=".jpg,.jpeg,.png,.webp" />
+                        <span asp-validation-for="PaymentProofImage" class="text-danger"></span>
+                        <div class="upload-note">
+                            @Localizer["UploadScreenshotNote"]
+                        </div>
+
+                    </div>
+
+                    <div class="mt-4">
+                        <button type="submit" class="book-btn" id="confirmBookingBtn">
+                            @Localizer["ConfirmBooking"]
+                        </button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="side-card">
+                <h4 class="section-heading">@Localizer["BookingSummary"]</h4>
+
+                <div class="summary-box">
+                    <div class="summary-row">
+                        <span>@Localizer["Apartment"]</span>
+                        <strong>@Model.Apartment.Title</strong>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>@Localizer["PricePerNightSummary"]</span>
+                        <strong>@Model.Apartment.PricePerNight EGP</strong>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>@Localizer["Nights"]</span>
+                        <strong id="summaryNights">0</strong>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>@Localizer["CheckIn"]</span>
+                        <strong id="summaryCheckIn">-</strong>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>@Localizer["CheckOut"]</span>
+                        <strong id="summaryCheckOut">-</strong>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>@Localizer["PaymentMethod"]</span>
+                        <strong id="summaryPaymentMethod">-</strong>
+                    </div>
+
+                    <div class="summary-total">
+                        <span>@Localizer["Total"]</span>
+                        <span id="summaryTotal">0 EGP</span>
+                    </div>
+
+                    <div class="summary-row mt-3">
+                        <span>@Localizer["RequiredToConfirm"]</span>
+                        <strong id="summaryDeposit">0 EGP</strong>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>@Localizer["RemainingOnArrival"]</span>
+                        <strong id="summaryRemaining">0 EGP</strong>
+                    </div>
+                </div>
+
+                <div class="confirmation-note">
+                    @Localizer["ConfirmationNoteBefore"] <strong>50%</strong> @Localizer["ConfirmationNoteAfter"]
+                </div>
+
+
+                <p class="text-muted mb-0 mt-3">
+                    @Localizer["PendingConfirmationNote"]
+                </p>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            const apartmentId = @Model.ApartmentId;
+            const pricePerNight = parseFloat(document.getElementById("pricePerNight").value);
+
+            const checkInInput = document.getElementById("checkInDate");
+            const checkOutInput = document.getElementById("checkOutDate");
+            const paymentMethod = document.getElementById("paymentMethod");
+            const paymentInfoBox = document.getElementById("paymentInfoBox");
+            const paymentInfoTitle = document.getElementById("paymentInfoTitle");
+            const transferTo = document.getElementById("transferTo");
+            const transferNumber = document.getElementById("transferNumber");
+            const screenshotPhone = document.getElementById("screenshotPhone");
+
+            const summaryNights = document.getElementById("summaryNights");
+            const summaryCheckIn = document.getElementById("summaryCheckIn");
+            const summaryCheckOut = document.getElementById("summaryCheckOut");
+            const summaryTotal = document.getElementById("summaryTotal");
+            const summaryDeposit = document.getElementById("summaryDeposit");
+            const summaryRemaining = document.getElementById("summaryRemaining");
+            const summaryPaymentMethod = document.getElementById("summaryPaymentMethod");
+            const availabilityMessage = document.getElementById("availabilityMessage");
+            const confirmBookingBtn = document.getElementById("confirmBookingBtn");
+
+            let isRangeAvailable = false;
+
+            const paymentData = {
+                VodafoneCash: {
+                    title: "@Localizer["VodafoneCashPayment"]",
+                    transferTo: "@Localizer["VodafoneCashWallet"]",
+                    transferNumber: "01012345678",
+                    screenshotPhone: "01098765432"
+                },
+                InstaPay: {
+                    title: "@Localizer["InstaPayPayment"]",
+                    transferTo: "@Localizer["InstaPayAccount"]",
+                    transferNumber: "felopater@instapay",
+                    screenshotPhone: "01098765432"
+                }
+            };
+
+            const response = await fetch(`/Bookings/GetBookingCalendarData?apartmentId=${apartmentId}`);
+            const calendarData = await response.json();
+
+            const unavailableDates = calendarData.unavailableDates || [];
+            const startDates = calendarData.startDates || [];
+            const endDates = calendarData.endDates || [];
+            const checkInBlockedDates = unavailableDates;
+            const checkOutBlockedDates = unavailableDates.filter(d => !startDates.includes(d));
+
+            function formatDate(date) {
+                if (!date) return "-";
+                return flatpickr.formatDate(date, "Y-m-d");
+            }
+
+            function countNights(checkIn, checkOut) {
+                if (!checkIn || !checkOut) return 0;
+                const diff = checkOut - checkIn;
+                return Math.ceil(diff / (1000 * 60 * 60 * 24));
+            }
+
+            function hasUnavailableBetween(checkIn, checkOut) {
+                if (!checkIn || !checkOut) return false;
+
+                let current = new Date(checkIn);
+                while (current < checkOut) {
+                    const formatted = flatpickr.formatDate(current, "Y-m-d");
+                    if (unavailableDates.includes(formatted)) {
+                        return true;
+                    }
+                    current.setDate(current.getDate() + 1);
+                }
+
+                return false;
+            }
+
+                 function decorateDay(dayElem) {
+            const date = dayElem.dateObj;
+            const formatted = flatpickr.formatDate(date, "Y-m-d");
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const isUnavailable = unavailableDates.includes(formatted);
+            const isStartDate = startDates.includes(formatted);
+            const isEndDate = endDates.includes(formatted);
+            const isTurnover = isStartDate && isEndDate;
+
+            if (isTurnover) {
+                dayElem.classList.add("turnover-date");
+            }
+            else if (isStartDate) {
+                dayElem.classList.add("checkout-only-date");
+            }
+            else if (isUnavailable) {
+                dayElem.classList.add("booked-date");
+            }
+            else if (date >= today) {
+                dayElem.classList.add("available-date");
+            }
+        }
+
+
+            function updatePaymentInfo() {
+                const selectedMethod = paymentMethod.value;
+                summaryPaymentMethod.textContent = selectedMethod || "-";
+
+                if (!selectedMethod || !paymentData[selectedMethod]) {
+                    paymentInfoBox.classList.remove("show");
+                    return;
+                }
+
+                paymentInfoTitle.textContent = paymentData[selectedMethod].title;
+                transferTo.textContent = paymentData[selectedMethod].transferTo;
+                transferNumber.textContent = paymentData[selectedMethod].transferNumber;
+                screenshotPhone.textContent = paymentData[selectedMethod].screenshotPhone;
+
+                paymentInfoBox.classList.add("show");
+            }
+
+            function updateSummary() {
+                const checkIn = checkInPicker.selectedDates[0];
+                const checkOut = checkOutPicker.selectedDates[0];
+
+                summaryCheckIn.textContent = formatDate(checkIn);
+                summaryCheckOut.textContent = formatDate(checkOut);
+
+                const nights = countNights(checkIn, checkOut);
+                summaryNights.textContent = nights;
+
+                const total = nights * pricePerNight;
+                const deposit = total / 2;
+                const remaining = total - deposit;
+
+                summaryTotal.textContent = `${total} @Localizer["EGP"]`;
+                summaryDeposit.textContent = `${deposit} @Localizer["EGP"]`;
+                summaryRemaining.textContent = `${remaining} @Localizer["EGP"]`;
+
+
+
+                isRangeAvailable = false;
+
+                 if (checkIn && checkOut) {
+                    if (hasUnavailableBetween(checkIn, checkOut)) {
+                                availabilityMessage.textContent = "@Localizer["SelectedRangeUnavailable"]";
+                                availabilityMessage.className = "availability-message text-danger-custom";
+                        confirmBookingBtn.disabled = true;
+                    } else {
+                                availabilityMessage.textContent = "@Localizer["SelectedDatesAvailable"]";
+                                availabilityMessage.className = "availability-message text-success-custom";
+                        confirmBookingBtn.disabled = false;
+                        isRangeAvailable = true;
+                    }
+                 }else {
+                    availabilityMessage.textContent = "";
+                    confirmBookingBtn.disabled = true;
+                    summaryDeposit.textContent = `0 @Localizer["EGP"]`;
+                    summaryRemaining.textContent = `0 @Localizer["EGP"]`;
+
+                 }
+
+            }
+
+                    const checkInPicker = flatpickr(checkInInput, {
+            dateFormat: "Y-m-d",
+            minDate: "today",
+            disable: checkInBlockedDates,
+            onDayCreate: function (dObj, dStr, fp, dayElem) {
+                decorateDay(dayElem);
+            },
+            onChange: function (selectedDates) {
+                if (selectedDates.length > 0) {
+                    const minCheckOut = new Date(selectedDates[0]);
+                    minCheckOut.setDate(minCheckOut.getDate() + 1);
+                    checkOutPicker.set("minDate", minCheckOut);
+                }
+                updateSummary();
+            }
+        });
+
+                    const checkOutPicker = flatpickr(checkOutInput, {
+            dateFormat: "Y-m-d",
+            minDate: "today",
+            disable: checkOutBlockedDates,
+            onDayCreate: function (dObj, dStr, fp, dayElem) {
+                decorateDay(dayElem);
+            },
+            onChange: function () {
+                updateSummary();
+            }
+        });
+
+            paymentMethod.addEventListener("change", updatePaymentInfo);
+
+            confirmBookingBtn.disabled = true;
+            updatePaymentInfo();
+            updateSummary();
+        });
+    </script>
+}

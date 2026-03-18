@@ -1,0 +1,240 @@
+﻿@model ApartmentBookingSystem.Models.Apartment
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+}
+
+<style>
+    .form-card {
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 30px;
+        border-radius: 28px;
+        box-shadow: 0 20px 45px rgba(0,0,0,0.06);
+    }
+
+    .form-title {
+        font-size: 1.8rem;
+        font-weight: 900;
+        margin-bottom: 20px;
+        color: #0f172a;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .full {
+        grid-column: span 2;
+    }
+
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    .form-label {
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+
+    .form-control {
+        border-radius: 14px;
+        padding: 10px;
+        border: 1px solid #e5e7eb;
+    }
+
+        .form-control:focus {
+            border-color: #1d4ed8;
+            box-shadow: 0 0 0 2px rgba(29,78,216,0.15);
+        }
+
+    .upload-box {
+        border: 2px dashed #cbd5f5;
+        padding: 20px;
+        border-radius: 16px;
+        text-align: center;
+        background: #f8fafc;
+    }
+
+    .existing-images {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+    }
+
+        .existing-images img {
+            width: 90px;
+            height: 65px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+    .form-actions {
+        margin-top: 20px;
+        display: flex;
+        gap: 12px;
+    }
+
+    .btn-update {
+        background: linear-gradient(135deg,#f59e0b,#ef4444);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 14px;
+        font-weight: 800;
+        box-shadow: 0 10px 20px rgba(245,158,11,0.2);
+    }
+
+    .btn-back {
+        background: #e5e7eb;
+        color: #111;
+        padding: 12px 20px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+    .image-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        padding: 8px;
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+    }
+
+    .delete-check {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #dc2626;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+    }
+</style>
+
+<div class="form-card">
+    <div class="form-title">@Localizer["PageTitle"]</div>
+
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-grid">
+
+            <div class="form-group full">
+                <label class="form-label">@Localizer["Title"]</label>
+                <input asp-for="Title" class="form-control" />
+            </div>
+
+            <div class="form-group full">
+                <label class="form-label">@Localizer["Description"]</label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">@Localizer["Price"]</label>
+                <input asp-for="PricePerNight" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">@Localizer["Size"]</label>
+                <input asp-for="ApartmentSize" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">@Localizer["Rooms"]</label>
+                <input asp-for="Rooms" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">@Localizer["Bathrooms"]</label>
+                <input asp-for="Bathrooms" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">@Localizer["MaxGuests"]</label>
+                <input asp-for="MaxGuests" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">@Localizer["City"]</label>
+                <input asp-for="City" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">@Localizer["Area"]</label>
+                <input asp-for="Area" class="form-control" />
+            </div>
+
+            <div class="form-group full">
+                <label class="form-label">@Localizer["Address"]</label>
+                <input asp-for="Address" class="form-control" />
+            </div>
+
+            <div class="form-group full">
+                <label class="form-label">@Localizer["LocationUrl"]</label>
+                <input asp-for="LocationUrl" class="form-control" />
+            </div>
+
+            <div class="form-group full">
+                <label class="form-label">@Localizer["VideoUrl"]</label>
+                <input asp-for="VideoUrl" class="form-control" />
+            </div>
+
+            <!-- Existing Images -->
+            <div class="form-group full">
+                <label class="form-label">@Localizer["CurrentImages"]</label>
+
+                @if (Model.Images != null && Model.Images.Any())
+                {
+                    <div class="existing-images">
+                        @foreach (var img in Model.Images)
+                        {
+                            <div class="image-card">
+                                <img src="@img.ImageUrl" alt="Apartment Image" />
+
+                                <label class="delete-check">
+                                    <input type="checkbox" name="deletedImageIds" value="@img.Id" />
+                                    @Localizer["DeleteImage"]
+                                </label>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <span>@Localizer["NoImage"]</span>
+                }
+            </div>
+
+            <!-- Upload new -->
+            <div class="form-group full">
+                <label class="form-label">@Localizer["UploadNew"]</label>
+                <div class="upload-box">
+                    <input type="file" name="imageFiles" multiple class="form-control" />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-update">
+                @Localizer["Update"]
+            </button>
+
+            <a asp-action="Index" class="btn-back">
+                @Localizer["Back"]
+            </a>
+        </div>
+
+    </form>
+</div>

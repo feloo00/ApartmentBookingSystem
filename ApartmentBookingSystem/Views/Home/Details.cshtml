@@ -1,0 +1,1347 @@
+﻿@model ApartmentBookingSystem.Models.Apartment
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["ApartmentDetailsTitle"];
+}
+
+<style>
+    body {
+        background: linear-gradient(180deg, #fffaf3 0%, #f7fcff 100%);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .details-page {
+        padding-top: 30px;
+        padding-bottom: 40px;
+    }
+
+    .details-header {
+        margin-bottom: 25px;
+    }
+
+    .details-title {
+        font-size: 2.3rem;
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 10px;
+    }
+
+    .details-subtitle {
+        color: #6b7280;
+        font-size: 1rem;
+    }
+
+    .top-gallery-card {
+        background: #fff;
+        border: none;
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        margin-bottom: 30px;
+    }
+
+    .main-slider {
+        position: relative;
+        width: 100%;
+        height: 500px;
+        overflow: hidden;
+        background: #f3f4f6;
+    }
+
+    .main-slider-track {
+        display: flex;
+        height: 100%;
+        transition: transform 0.6s ease-in-out;
+    }
+
+    .main-slide {
+        min-width: 100%;
+        height: 500px;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+        .main-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .main-slide:hover img {
+            transform: scale(1.06);
+        }
+
+    .gallery-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 5;
+        width: 46px;
+        height: 46px;
+        border: none;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.88);
+        color: #333;
+        font-size: 22px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+    }
+
+        .gallery-btn:hover {
+            background: #fff;
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        .gallery-btn.prev {
+            left: 18px;
+        }
+
+        .gallery-btn.next {
+            right: 18px;
+        }
+
+    .gallery-dots {
+        position: absolute;
+        bottom: 18px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(0,0,0,0.18);
+        backdrop-filter: blur(6px);
+        z-index: 5;
+    }
+
+    .gallery-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.6);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        .gallery-dot.active {
+            background: #fff;
+            transform: scale(1.2);
+        }
+
+    .thumbs-wrapper {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        padding: 18px;
+        background: #fff;
+    }
+
+        .thumbs-wrapper::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .thumbs-wrapper::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 999px;
+        }
+
+    .thumb-item {
+        min-width: 130px;
+        height: 90px;
+        border-radius: 16px;
+        overflow: hidden;
+        cursor: pointer;
+        border: 3px solid transparent;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+    }
+
+        .thumb-item.active {
+            border-color: #29b6f6;
+            transform: scale(1.03);
+        }
+
+        .thumb-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .content-card {
+        background: #fff;
+        border: none;
+        border-radius: 24px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.07);
+        padding: 28px;
+        margin-bottom: 24px;
+    }
+
+    .section-heading {
+        font-size: 1.45rem;
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 18px;
+    }
+
+    .description-text {
+        color: #4b5563;
+        line-height: 1.9;
+        font-size: 1.02rem;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+    }
+
+    .info-box {
+        background: linear-gradient(135deg, #f8fbff, #fff8ef);
+        border-radius: 18px;
+        padding: 18px;
+        box-shadow: inset 0 0 0 1px rgba(0,0,0,0.03);
+        transition: transform 0.3s ease;
+    }
+
+        .info-box:hover {
+            transform: translateY(-4px);
+        }
+
+    .info-label {
+        font-size: 0.9rem;
+        color: #6b7280;
+        margin-bottom: 8px;
+    }
+
+    .info-value {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #1f2937;
+    }
+
+   
+
+    .booking-card {
+        background: #fff;
+        border: none;
+        border-radius: 24px;
+        box-shadow: 0 14px 35px rgba(0,0,0,0.10);
+        padding: 24px;
+        position: sticky;
+        top: 100px;
+    }
+
+    .booking-price {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 8px;
+    }
+
+        .booking-price span {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #6b7280;
+        }
+
+    .booking-badge {
+        display: inline-block;
+        background: #fef3c7;
+        color: #b45309;
+        padding: 7px 14px;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        margin-bottom: 18px;
+    }
+
+    .summer-book-btn {
+        background: linear-gradient(135deg, #29b6f6, #26c6da);
+        border: none;
+        color: #fff;
+        font-weight: 700;
+        width: 100%;
+        padding: 14px 18px;
+        border-radius: 16px;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 12px 24px rgba(41, 182, 246, 0.28);
+    }
+
+        .summer-book-btn:hover {
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 16px 28px rgba(41, 182, 246, 0.36);
+        }
+
+    .booking-note {
+        margin-top: 14px;
+        color: #6b7280;
+        font-size: 0.93rem;
+        text-align: center;
+    }
+
+    .fade-up {
+        animation: fadeUp 0.8s ease forwards;
+    }
+
+    @@keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(24px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@media (max-width: 991px) {
+        .main-slider,
+        .main-slide {
+            height: 340px;
+        }
+
+        .booking-card {
+            position: static;
+            margin-top: 10px;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .details-title {
+            font-size: 1.8rem;
+        }
+
+        .main-slider,
+        .main-slide {
+            height: 260px;
+        }
+
+        .content-card,
+        .booking-card {
+            padding: 20px;
+        }
+    }
+
+    .review-form-card {
+        background: #fff;
+        border-radius: 24px;
+        padding: 24px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+
+    .star-rating {
+        direction: rtl;
+        display: inline-flex;
+        gap: 6px;
+    }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            font-size: 2.2rem;
+            color: #d1d5db;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+            .star-rating label:hover,
+            .star-rating label:hover ~ label {
+                color: #fbbf24;
+                transform: scale(1.08);
+            }
+
+        .star-rating input:checked ~ label {
+            color: #fbbf24;
+        }
+
+    .review-card {
+        background: #fff;
+        border-radius: 20px;
+        padding: 18px;
+        box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+        margin-bottom: 14px;
+    }
+
+    .review-user {
+        font-weight: 800;
+        color: #111827;
+    }
+
+    .review-stars {
+        color: #fbbf24;
+        font-size: 1.1rem;
+        margin: 6px 0;
+    }
+
+    .review-comment {
+        color: #4b5563;
+        line-height: 1.8;
+    }
+
+    .review-date {
+        color: #9ca3af;
+        font-size: 0.9rem;
+    }
+
+
+    .amenities-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 14px;
+    }
+
+    .amenity-item {
+        background: linear-gradient(135deg, #f8fbff, #fff8ef);
+        border-radius: 18px;
+        padding: 16px 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: inset 0 0 0 1px rgba(0,0,0,0.03);
+        transition: all 0.3s ease;
+    }
+
+        .amenity-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 22px rgba(0,0,0,0.06);
+        }
+
+    .amenity-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* background: linear-gradient(135deg, #29b6f6, #26c6da); */
+        color: white;
+        font-size: 1.15rem;
+        flex-shrink: 0;
+    }
+
+    .amenity-text {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #1f2937;
+    }
+
+    .policies-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .policy-card {
+        background: linear-gradient(135deg, #fcfdff, #fffaf4);
+        border: 1px solid #eef2f7;
+        border-radius: 20px;
+        padding: 20px;
+        transition: all 0.3s ease;
+    }
+
+        .policy-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.05);
+        }
+
+    .policy-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.08rem;
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 10px;
+    }
+
+    .policy-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        background: #fef3c7;
+        color: #b45309;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        flex-shrink: 0;
+    }
+
+    .policy-text {
+        color: #4b5563;
+        line-height: 1.9;
+        font-size: 0.98rem;
+    }
+
+    .policy-highlight {
+        color: #111827;
+        font-weight: 700;
+    }
+
+    .video-slide {
+        position: relative;
+        cursor: pointer;
+    }
+
+    .video-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .video-play-btn {
+        width: 78px;
+        height: 78px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.92);
+        color: #111827;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+    }
+
+    .video-thumb {
+        position: relative;
+    }
+
+    .thumb-video-icon {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.4rem;
+        background: rgba(0,0,0,0.20);
+    }
+
+    .media-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.75);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        padding: 20px;
+    }
+
+        .media-modal.show {
+            display: flex;
+        }
+
+    .media-modal-content {
+        background: #fff;
+        width: 100%;
+        max-width: 1000px;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+        animation: modalFadeIn 0.25s ease;
+        position: relative;
+    }
+
+    .media-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 20px;
+        border-bottom: 1px solid #eef2f7;
+    }
+
+    .media-modal-title {
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: #111827;
+    }
+
+    .media-modal-close {
+        width: 42px;
+        height: 42px;
+        border: none;
+        border-radius: 50%;
+        background: #f3f4f6;
+        font-size: 1.3rem;
+        cursor: pointer;
+    }
+
+    .media-modal-body {
+        background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 350px;
+    }
+
+        .media-modal-body img {
+            width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+
+        .media-modal-body iframe {
+            width: 100%;
+            height: 80vh;
+            border: none;
+        }
+
+    @@keyframes modalFadeIn {
+        from
+
+    {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    }
+
+    .details-page {
+        direction: rtl;
+    }
+
+    .main-slider,
+    .main-slider-track,
+    .thumbs-wrapper {
+        direction: ltr;
+    }
+
+    .location-link {
+        color: #2563eb;
+        text-decoration: none;
+        font-weight: 700;
+        transition: 0.3s ease;
+    }
+
+        .location-link:hover {
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+
+    /* container */
+    .premium-alert {
+        background: linear-gradient(135deg, #f8fafc, #eef2ff);
+        border: none;
+        border-radius: 24px;
+        padding: 35px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.06);
+        position: relative;
+        overflow: hidden;
+    }
+
+        /* subtle glow */
+        .premium-alert::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99,102,241,0.08), transparent 60%);
+            z-index: 0;
+        }
+
+    /* text */
+    .premium-text {
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: #334155;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* buttons wrapper */
+    .premium-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* base button */
+    .btn-premium {
+        padding: 12px 28px;
+        border-radius: 16px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        position: relative;
+    }
+
+    /* LOGIN button (gradient + glow) */
+    .btn-login {
+        background: linear-gradient(135deg, #3b82f6, #6366f1);
+        color: white;
+        box-shadow: 0 12px 30px rgba(99,102,241,0.35);
+    }
+
+        .btn-login:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 18px 40px rgba(99,102,241,0.45);
+        }
+
+    /* REGISTER button (glass effect) */
+    .btn-register {
+        background: rgba(255,255,255,0.6);
+        backdrop-filter: blur(12px);
+        border: 1px solid #c7d2fe;
+        color: #4f46e5;
+    }
+
+        .btn-register:hover {
+            background: #eef2ff;
+            transform: translateY(-3px);
+        }
+
+    /* click effect */
+    .btn-premium:active {
+        transform: scale(0.97);
+    }
+
+    /* mobile responsive */
+    @@media (max-width: 576px) {
+        .premium-buttons
+
+    {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-premium {
+        width: 100%;
+        justify-content: center;
+    }
+
+    }
+</style>
+
+<div class="container details-page">
+
+    <div class="details-header fade-up">
+        <h2 class="details-title">@Model.Title</h2>
+        <div class="details-subtitle">
+            📍 @Model.City - @Model.Area
+        </div>
+    </div>
+
+    @{
+        var hasImages = Model.Images != null && Model.Images.Any();
+        var hasVideo = !string.IsNullOrWhiteSpace(Model.VideoUrl);
+
+        string? embedVideoUrl = null;
+        string? videoThumbnail = null;
+
+        if (hasVideo)
+        {
+            embedVideoUrl = Model.VideoUrl;
+
+            if (Model.VideoUrl.Contains("youtube.com/watch?v="))
+            {
+                embedVideoUrl = Model.VideoUrl.Replace("watch?v=", "embed/");
+            }
+            else if (Model.VideoUrl.Contains("youtu.be/"))
+            {
+                var cleanUrl = Model.VideoUrl.Split('?')[0];
+                var videoId = cleanUrl.Split('/').Last();
+                embedVideoUrl = $"https://www.youtube.com/embed/{videoId}";
+            }
+
+            if (!string.IsNullOrWhiteSpace(embedVideoUrl) && embedVideoUrl.Contains("/embed/"))
+            {
+                var videoId = embedVideoUrl.Split("/embed/").Last().Split('?').First();
+                videoThumbnail = $"https://img.youtube.com/vi/{videoId}/hqdefault.jpg";
+            }
+        }
+
+        var mediaCount = (hasImages ? Model.Images.Count() : 0) + (hasVideo ? 1 : 0);
+    }
+
+    @if (hasImages || hasVideo)
+    {
+        <div class="top-gallery-card fade-up">
+            <div class="main-slider" id="detailsSlider">
+                <button type="button" class="gallery-btn prev" id="prevBtn">&#10094;</button>
+                <button type="button" class="gallery-btn next" id="nextBtn">&#10095;</button>
+
+                <div class="main-slider-track" id="sliderTrack">
+                    @if (hasImages)
+                    {
+                        @foreach (var image in Model.Images)
+                        {
+                            <div class="main-slide media-trigger"
+                                 data-type="image"
+                                 data-src="@image.ImageUrl">
+                                <img src="@image.ImageUrl" alt="@Model.Title" />
+                            </div>
+                        }
+                    }
+
+                    @if (hasVideo && !string.IsNullOrWhiteSpace(embedVideoUrl))
+                    {
+                        <div class="main-slide media-trigger video-slide"
+                             data-type="video"
+                             data-src="@embedVideoUrl">
+                            <img src="@videoThumbnail" alt="@Localizer["VideoThumbnailAlt"]" />
+                            <div class="video-overlay">
+                                <div class="video-play-btn">▶</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="gallery-dots" id="galleryDots">
+                    @for (int i = 0; i < mediaCount; i++)
+                    {
+                        <span class="gallery-dot @(i == 0 ? "active" : "")" data-index="@i"></span>
+                    }
+                </div>
+            </div>
+
+            <div class="thumbs-wrapper" id="thumbsWrapper">
+                @{
+                    var thumbIndex = 0;
+                }
+
+                @if (hasImages)
+                {
+                    @foreach (var image in Model.Images)
+                    {
+                        <div class="thumb-item @(thumbIndex == 0 ? "active" : "")" data-index="@thumbIndex">
+                            <img src="@image.ImageUrl" alt="@Model.Title" />
+                        </div>
+                        thumbIndex++;
+                    }
+                }
+
+                @if (hasVideo && !string.IsNullOrWhiteSpace(videoThumbnail))
+                {
+                    <div class="thumb-item video-thumb" data-index="@thumbIndex">
+                        <img src="@videoThumbnail" alt="@Localizer["VideoThumbnailAlt"]" />
+                        <div class="thumb-video-icon">▶</div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+
+            <div class="content-card fade-up">
+                <h3 class="section-heading">@Localizer["AboutApartment"]</h3>
+                <p class="description-text">
+                    @Model.Description
+                </p>
+            </div>
+
+            <div class="content-card fade-up">
+                <h3 class="section-heading">@Localizer["ApartmentDetails"]</h3>
+
+                <div class="info-grid">
+                    <div class="info-box">
+                        <div class="info-label">@Localizer["Rooms"]</div>
+                        <div class="info-value">🏠 @Model.Rooms</div>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-label">@Localizer["Bathrooms"]</div>
+                        <div class="info-value">🚿 @Model.Bathrooms</div>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-label">@Localizer["MaxGuests"]</div>
+                        <div class="info-value">👥 @Model.MaxGuests</div>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-label">@Localizer["Address"]</div>
+                        <div class="info-value">📍 @Model.Address</div>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-label">@Localizer["City"]</div>
+                        <div class="info-value">🌆 @Model.City</div>
+                    </div>
+                    <div class="info-box">
+                        <div class="info-label">@Localizer["ApartmentSize"]</div>
+                        <div class="info-value">📐 @Model.ApartmentSize m²</div>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-label">@Localizer["LocationUrl"]</div>
+                        <div class="info-value">
+                            @if (!string.IsNullOrWhiteSpace(Model.LocationUrl))
+                            {
+                                <a href="@Model.LocationUrl" target="_blank" class="location-link">
+                                    📍 Open in Google Maps
+                                </a>
+                            }
+                            else
+                            {
+                                <span>📍 Not available</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-label">@Localizer["PricePerNight"]</div>
+                        <div class="info-value">💰 @Model.PricePerNight @Localizer["EGP"]</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card fade-up">
+                <h3 class="section-heading">@Localizer["Amenities"]</h3>
+
+                <div class="amenities-grid">
+                    <div class="amenity-item">
+                        <div class="amenity-icon">📶</div>
+                        <div class="amenity-text">@Localizer["FreeWiFi"]</div>
+                    </div>
+
+                    <div class="amenity-item">
+                        <div class="amenity-icon">❄️</div>
+                        <div class="amenity-text">@Localizer["CentralAC"]</div>
+                    </div>
+
+                    <div class="amenity-item">
+                        <div class="amenity-icon">📺</div>
+                        <div class="amenity-text">@Localizer["SmartTV"]</div>
+                    </div>
+
+                    <div class="amenity-item">
+                        <div class="amenity-icon">🍳</div>
+                        <div class="amenity-text">@Localizer["FullyEquippedKitchen"]</div>
+                    </div>
+
+                    <div class="amenity-item">
+                        <div class="amenity-icon">🧺</div>
+                        <div class="amenity-text">@Localizer["WashingMachine"]</div>
+                    </div>
+
+                    <div class="amenity-item">
+                        <div class="amenity-icon">🌇</div>
+                        <div class="amenity-text">@Localizer["Balcony"]</div>
+                    </div>
+
+                    <div class="amenity-item">
+                        <div class="amenity-icon">🛗</div>
+                        <div class="amenity-text">@Localizer["Elevator"]</div>
+                    </div>
+
+                    <div class="amenity-item">
+                        <div class="amenity-icon">🛡️</div>
+                        <div class="amenity-text">@Localizer["Security247"]</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card fade-up">
+                <h3 class="section-heading">@Localizer["Policies"]</h3>
+
+                <div class="policies-list">
+
+                    <div class="policy-card">
+                        <div class="policy-title">
+                            <div class="policy-icon">🕒</div>
+                            <span>@Localizer["CheckInCheckOut"]</span>
+                        </div>
+                        <div class="policy-text">
+                            @Localizer["CheckInCheckOutText"]
+                        </div>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-title">
+                            <div class="policy-icon">💳</div>
+                            <span>@Localizer["CancellationPolicy"]</span>
+                        </div>
+                        <div class="policy-text">
+                            @Localizer["CancellationPolicyText"]
+                        </div>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-title">
+                            <div class="policy-icon">👥</div>
+                            <span>@Localizer["GuestPolicy"]</span>
+                        </div>
+                        <div class="policy-text">
+                            @Localizer["GuestPolicyText"]
+                        </div>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-title">
+                            <div class="policy-icon">🚭</div>
+                            <span>@Localizer["SmokingPolicy"]</span>
+                        </div>
+                        <div class="policy-text">
+                            @Localizer["SmokingPolicyText"]
+                        </div>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-title">
+                            <div class="policy-icon">🐾</div>
+                            <span>@Localizer["PetsPolicy"]</span>
+                        </div>
+                        <div class="policy-text">
+                            @Localizer["PetsPolicyText"]
+                        </div>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-title">
+                            <div class="policy-icon">🔇</div>
+                            <span>@Localizer["NoisePolicy"]</span>
+                        </div>
+                        <div class="policy-text">
+                            @Localizer["NoisePolicyText"]
+                        </div>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-title">
+                            <div class="policy-icon">💍</div>
+                            <span>@Localizer["CouplesReservations"]</span>
+                        </div>
+                        <div class="policy-text">
+                            @Localizer["CouplesReservationsText"]
+                        </div>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-title">
+                            <div class="policy-icon">🧑‍🤝‍🧑</div>
+                            <span>@Localizer["YouthReservations"]</span>
+                        </div>
+                        <div class="policy-text">
+                            @Localizer["YouthReservationsText"]
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            @if (TempData["ReviewSuccess"] != null)
+            {
+                <div class="alert alert-success mt-3">
+                    @TempData["ReviewSuccess"]
+                </div>
+            }
+
+            @if (TempData["ReviewError"] != null)
+            {
+                <div class="alert alert-danger mt-3">
+                    @TempData["ReviewError"]
+                </div>
+            }
+
+            <div class="content-card fade-up">
+                <h3 class="section-heading">@Localizer["Reviews"]</h3>
+
+                @if (Model.Reviews != null && Model.Reviews.Any())
+                {
+                    @foreach (var review in Model.Reviews.OrderByDescending(r => r.CreatedAt))
+                    {
+                        <div class="review-card">
+                            <div class="review-user">
+                                @(review.User?.FullName ?? review.User?.UserName ?? Localizer["User"].Value)
+                            </div>
+
+                            <div class="review-stars">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    if (i <= review.Rating)
+                                    {
+                                        <span>★</span>
+                                    }
+                                    else
+                                    {
+                                        <span style="color:#d1d5db;">★</span>
+                                    }
+                                }
+                            </div>
+
+                            <div class="review-comment">
+                                @review.Comment
+                            </div>
+
+                            <div class="review-date mt-2">
+                                @review.CreatedAt.ToString("yyyy-MM-dd")
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="text-muted">@Localizer["NoReviewsYet"]</p>
+                }
+            </div>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <form asp-controller="Reviews" asp-action="Create" method="post" class="review-form-card mt-4">
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden" name="apartmentId" value="@Model.Id" />
+
+                    <h4 class="mb-3">@Localizer["LeaveReview"]</h4>
+
+                    <div class="star-rating mb-3">
+                        <input type="radio" id="star5" name="rating" value="5" required />
+                        <label for="star5" title="@Localizer["FiveStars"]">★</label>
+
+                        <input type="radio" id="star4" name="rating" value="4" />
+                        <label for="star4" title="@Localizer["FourStars"]">★</label>
+
+                        <input type="radio" id="star3" name="rating" value="3" />
+                        <label for="star3" title="@Localizer["ThreeStars"]">★</label>
+
+                        <input type="radio" id="star2" name="rating" value="2" />
+                        <label for="star2" title="@Localizer["TwoStars"]">★</label>
+
+                        <input type="radio" id="star1" name="rating" value="1" />
+                        <label for="star1" title="@Localizer["OneStar"]">★</label>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">@Localizer["Comment"]</label>
+                        <textarea name="comment" class="form-control" rows="4" required placeholder="@Localizer["WriteReviewPlaceholder"]"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary px-4">
+                        @Localizer["SubmitReview"]
+                    </button>
+                </form>
+            }
+            else
+            {
+                <div class="alert premium-alert mt-4 text-center">
+
+                    <p class="mb-4 premium-text">
+                        @Localizer["PleaseSignInToReview"]
+                    </p>
+
+                    <div class="premium-buttons">
+
+                        <a asp-area="Identity" asp-page="/Account/Login" class="btn-premium btn-login">
+                             @Localizer["SignIn"]
+                        </a>
+
+                        <a asp-area="Identity" asp-page="/Account/Register" class="btn-premium btn-register">
+                             @Localizer["Register"]
+                        </a>
+
+                    </div>
+                </div>
+            }
+
+        </div>
+
+        <div class="col-lg-4">
+            <div class="booking-card fade-up">
+                <div class="booking-badge">@Localizer["BestSummerChoice"]</div>
+
+                <div class="booking-price">
+                    @Model.PricePerNight @Localizer["EGP"] <span>@Localizer["PerNight"]</span>
+                </div>
+
+                <p class="text-muted mb-4">
+                    @Localizer["BookNowDescription"]
+                </p>
+
+                <a class="summer-book-btn"
+                   asp-controller="Bookings"
+                   asp-action="Create"
+                   asp-route-apartmentId="@Model.Id">
+                    @Localizer["BookNow"]
+                </a>
+
+                <div class="booking-note">
+                    @Localizer["BookingNote"]
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="media-modal" id="mediaModal">
+        <div class="media-modal-content">
+            <div class="media-modal-header">
+                <div class="media-modal-title">@Localizer["MediaPreview"]</div>
+                <button type="button" class="media-modal-close" id="closeMediaModal">&times;</button>
+            </div>
+
+            <div class="media-modal-body" id="mediaModalBody">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const slider = document.getElementById("detailsSlider");
+            const track = document.getElementById("sliderTrack");
+
+            if (!slider || !track) return;
+
+            const slides = slider.querySelectorAll(".main-slide");
+            const dots = document.querySelectorAll(".gallery-dot");
+            const thumbs = document.querySelectorAll(".thumb-item");
+            const prevBtn = document.getElementById("prevBtn");
+            const nextBtn = document.getElementById("nextBtn");
+
+            const mediaModal = document.getElementById("mediaModal");
+            const mediaModalBody = document.getElementById("mediaModalBody");
+            const closeMediaModal = document.getElementById("closeMediaModal");
+            const mediaTriggers = document.querySelectorAll(".media-trigger");
+
+            let currentIndex = 0;
+            let autoSlide;
+
+            function updateSlider(index) {
+                track.style.transform = `translateX(-${index * 100}%)`;
+
+                dots.forEach(dot => dot.classList.remove("active"));
+                thumbs.forEach(thumb => thumb.classList.remove("active"));
+
+                if (dots[index]) dots[index].classList.add("active");
+                if (thumbs[index]) thumbs[index].classList.add("active");
+
+                currentIndex = index;
+            }
+
+            function nextSlide() {
+                let newIndex = currentIndex + 1;
+                if (newIndex >= slides.length) newIndex = 0;
+                updateSlider(newIndex);
+            }
+
+            function prevSlide() {
+                let newIndex = currentIndex - 1;
+                if (newIndex < 0) newIndex = slides.length - 1;
+                updateSlider(newIndex);
+            }
+
+            function startAutoSlide() {
+                autoSlide = setInterval(() => {
+                    nextSlide();
+                }, 3500);
+            }
+
+            function stopAutoSlide() {
+                clearInterval(autoSlide);
+            }
+
+            function openMediaModal(type, src) {
+                if (!mediaModal || !mediaModalBody) return;
+
+                if (type === "image") {
+                    mediaModalBody.innerHTML = `<img src="${src}" alt="Preview" />`;
+                } else if (type === "video") {
+                    mediaModalBody.innerHTML = `
+                        <iframe src="${src}?autoplay=1"
+                                title="Video Preview"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                        </iframe>`;
+                }
+
+                mediaModal.classList.add("show");
+                stopAutoSlide();
+            }
+
+            function closeModal() {
+                mediaModal.classList.remove("show");
+                mediaModalBody.innerHTML = "";
+                startAutoSlide();
+            }
+
+            nextBtn.addEventListener("click", function () {
+                nextSlide();
+                stopAutoSlide();
+                startAutoSlide();
+            });
+
+            prevBtn.addEventListener("click", function () {
+                prevSlide();
+                stopAutoSlide();
+                startAutoSlide();
+            });
+
+            dots.forEach(dot => {
+                dot.addEventListener("click", function () {
+                    const index = parseInt(this.getAttribute("data-index"));
+                    updateSlider(index);
+                    stopAutoSlide();
+                    startAutoSlide();
+                });
+            });
+
+            thumbs.forEach(thumb => {
+                thumb.addEventListener("click", function () {
+                    const index = parseInt(this.getAttribute("data-index"));
+                    updateSlider(index);
+                    stopAutoSlide();
+                    startAutoSlide();
+                });
+            });
+
+            mediaTriggers.forEach(item => {
+                item.addEventListener("click", function () {
+                    const type = this.getAttribute("data-type");
+                    const src = this.getAttribute("data-src");
+                    openMediaModal(type, src);
+                });
+            });
+
+            closeMediaModal.addEventListener("click", closeModal);
+
+            mediaModal.addEventListener("click", function (e) {
+                if (e.target === mediaModal) {
+                    closeModal();
+                }
+            });
+
+            document.addEventListener("keydown", function (e) {
+                if (e.key === "Escape" && mediaModal.classList.contains("show")) {
+                    closeModal();
+                }
+            });
+
+            slider.addEventListener("mouseenter", stopAutoSlide);
+            slider.addEventListener("mouseleave", startAutoSlide);
+
+            updateSlider(0);
+            startAutoSlide();
+        });
+    </script>
+}

@@ -1,0 +1,215 @@
+﻿@model IEnumerable<ApartmentBookingSystem.Models.Apartment>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+}
+
+<style>
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .page-title {
+        font-size: 1.8rem;
+        font-weight: 900;
+        color: #0f172a;
+    }
+
+    .add-btn {
+        padding: 10px 18px;
+        border-radius: 14px;
+        background: linear-gradient(135deg,#1d4ed8,#0f766e);
+        color: white;
+        text-decoration: none;
+        font-weight: 800;
+        box-shadow: 0 10px 20px rgba(29,78,216,0.2);
+    }
+
+        .add-btn:hover {
+            color: white;
+            transform: translateY(-1px);
+        }
+
+    .table-card {
+        background: white;
+        border-radius: 24px;
+        padding: 20px;
+        box-shadow: 0 18px 40px rgba(0,0,0,0.06);
+    }
+
+    .table {
+        margin-bottom: 0;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+        .table thead {
+            background: #f1f5f9;
+            font-weight: 800;
+            color: #334155;
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
+
+    .price {
+        font-weight: 800;
+        color: #0f766e;
+    }
+
+    .status-badge {
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 800;
+    }
+
+    .available {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .not-available {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    .apartment-img {
+        width: 90px;
+        height: 65px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 4px;
+    }
+
+    .actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    .btn-edit {
+        padding: 6px 12px;
+        border-radius: 10px;
+        background: #facc15;
+        color: black;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .btn-delete {
+        padding: 6px 12px;
+        border-radius: 10px;
+        background: #ef4444;
+        color: white;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #64748b;
+        font-weight: 600;
+    }
+</style>
+
+<div class="page-header">
+    <div class="page-title">@Localizer["PageTitle"]</div>
+
+    <a asp-action="Create" class="add-btn">
+        + @Localizer["AddNew"]
+    </a>
+</div>
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger text-center">
+        @TempData["Error"]
+    </div>
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success text-center">
+        @TempData["Success"]
+    </div>
+}
+
+<div class="table-card">
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            @Localizer["NoApartments"]
+        </div>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Localizer["Title"]</th>
+                    <th>@Localizer["City"]</th>
+                    <th>@Localizer["Area"]</th>
+                    <th>@Localizer["Price"]</th>
+                    <th>@Localizer["Rooms"]</th>
+                    <th>@Localizer["Status"]</th>
+                    <th>@Localizer["Images"]</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>@item.City</td>
+                        <td>@item.Area</td>
+
+                        <td class="price">
+                            @item.PricePerNight
+                        </td>
+
+                        <td>@item.Rooms</td>
+
+                        <td>
+                            <span class="status-badge @(item.IsAvailable ? "available" : "not-available")">
+                                @(item.IsAvailable? Localizer["Available"] : Localizer["NotAvailable"])
+                            </span>
+                        </td>
+
+                        <td>
+                            @if (item.Images != null && item.Images.Any())
+                            {
+                                <img src="@item.Images.First().ImageUrl" class="apartment-img" />
+                                <div>
+                                    <small>@item.Images.Count @Localizer["ImagesCount"]</small>
+                                </div>
+                            }
+                            else
+                            {
+                                <span>@Localizer["NoImage"]</span>
+                            }
+                        </td>
+
+                        <td>
+                            <div class="actions">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn-edit">
+                                    @Localizer["Edit"]
+                                </a>
+
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn-delete">
+                                    @Localizer["Delete"]
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

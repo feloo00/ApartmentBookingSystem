@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+	
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>1.3</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="PageTitle" xml:space="preserve">
+    <value>About Us</value>
+  </data>
+
+	<data name="AboutBadge" xml:space="preserve">
+    <value>Madinaty • Luxury Living in Alexandria</value>
+  </data>
+	<data name="AboutTitle" xml:space="preserve">
+    <value>Madinaty is a trusted name in premium furnished apartments across Alexandria, backed by more than 10 years of experience</value>
+  </data>
+	<data name="AboutSubtitle" xml:space="preserve">
+    <value>At Madinaty, we offer a distinguished collection of furnished apartments across Alexandria, including first-row sea view residences and luxury second-row apartments with elegant hotel-style furnishing, refined comfort, and premium hospitality.</value>
+  </data>
+
+	<data name="Stat1Number" xml:space="preserve">
+    <value>10+</value>
+  </data>
+	<data name="Stat1Label" xml:space="preserve">
+    <value>Years of experience in furnished apartments</value>
+  </data>
+
+	<data name="Stat2Number" xml:space="preserve">
+    <value>Alex</value>
+  </data>
+	<data name="Stat2Label" xml:space="preserve">
+    <value>Apartments across all key areas of Alexandria</value>
+  </data>
+
+	<data name="Stat3Number" xml:space="preserve">
+    <value>1st</value>
+  </data>
+	<data name="Stat3Label" xml:space="preserve">
+    <value>First-row sea view apartments in premium locations</value>
+  </data>
+
+	<data name="Stat4Number" xml:space="preserve">
+    <value>Lux</value>
+  </data>
+	<data name="Stat4Label" xml:space="preserve">
+    <value>Second-row luxury apartments with hotel furnishing</value>
+  </data>
+
+	<data name="WhoWeAreTitle" xml:space="preserve">
+    <value>Who We Are</value>
+  </data>
+	<data name="WhoWeAreText" xml:space="preserve">
+    <value>With more than ten years of experience, Madinaty has become a trusted destination for premium furnished apartments in Alexandria. Our portfolio includes apartments in prime locations across the city, whether you are looking for a direct sea-front stay or a luxury second-row apartment with elegant hotel-style furnishing and a calm, refined atmosphere.</value>
+  </data>
+
+	<data name="StoryChip" xml:space="preserve">
+    <value>Premium Hospitality</value>
+  </data>
+	<data name="StoryTitle" xml:space="preserve">
+    <value>At Madinaty, we do not only offer apartments, we create a complete luxury stay experience</value>
+  </data>
+	<data name="StoryText" xml:space="preserve">
+    <value>Our focus is not only on location, but also on quality, comfort, and presentation. We carefully provide apartments that match different lifestyles and preferences, from stunning first-row sea view units to sophisticated luxury apartments in the second row, all prepared with tasteful finishes and hotel-style furnishing to deliver a stay that feels elegant, comfortable, and memorable.</value>
+  </data>
+
+	<data name="CollectionTitle" xml:space="preserve">
+    <value>Our Apartment Collection</value>
+  </data>
+	<data name="CollectionText" xml:space="preserve">
+    <value>We provide a wide variety of furnished apartments across Alexandria to meet different tastes and needs, while maintaining a high standard of elegance, cleanliness, and premium hospitality.</value>
+  </data>
+
+	<data name="Category1Badge" xml:space="preserve">
+    <value>First Row on the Sea</value>
+  </data>
+	<data name="Category1Title" xml:space="preserve">
+    <value>Direct sea-view apartments in the most beautiful parts of Alexandria</value>
+  </data>
+	<data name="Category1Text" xml:space="preserve">
+    <value>Our first-row apartments offer direct views of the sea, open balconies, fresh air, and a unique feeling of calm and luxury. They are ideal for guests looking for a premium coastal experience with unforgettable scenery.</value>
+  </data>
+	<data name="Category1Point1" xml:space="preserve">
+    <value>Direct and open sea views</value>
+  </data>
+	<data name="Category1Point2" xml:space="preserve">
+    <value>Prime locations across Alexandria</value>
+  </data>
+	<data name="Category1Point3" xml:space="preserve">
+    <value>Elegant balconies and bright spaces</value>
+  </data>
+	<data name="Category1Point4" xml:space="preserve">
+    <value>Perfect for a calm and refined stay</value>
+  </data>
+
+	<data name="Category2Badge" xml:space="preserve">
+    <value>Luxury Second Row</value>
+  </data>
+	<data name="Category2Title" xml:space="preserve">
+    <value>Luxury furnished apartments with hotel-style finishing and premium comfort</value>
+  </data>
+	<data name="Category2Text" xml:space="preserve">
+    <value>Our second-row luxury apartments combine privacy, stylish interiors, and hotel-style furnishing. They are perfect for guests who want a high-end stay experience with elegance, comfort, and excellent value.</value>
+  </data>
+	<data name="Category2Point1" xml:space="preserve">
+    <value>Luxury furnished interiors</value>
+  </data>
+	<data name="Category2Point2" xml:space="preserve">
+    <value>Hotel-style furniture and details</value>
+  </data>
+	<data name="Category2Point3" xml:space="preserve">
+    <value>Comfortable and elegant atmosphere</value>
+  </data>
+	<data name="Category2Point4" xml:space="preserve">
+    <value>High quality across different locations</value>
+  </data>
+
+	<data name="WhyChooseTitle" xml:space="preserve">
+    <value>Why Guests Choose Us</value>
+  </data>
+	<data name="WhyChooseText" xml:space="preserve">
+    <value>Our experience, variety, and attention to detail make us a trusted choice for guests looking for premium furnished apartments in Alexandria.</value>
+  </data>
+
+	<data name="Why1Title" xml:space="preserve">
+    <value>Wide Variety</value>
+  </data>
+	<data name="Why1Text" xml:space="preserve">
+    <value>A large portfolio of apartments across Alexandria to suit different needs and preferences.</value>
+  </data>
+
+	<data name="Why2Title" xml:space="preserve">
+    <value>Prime Sea Locations</value>
+  </data>
+	<data name="Why2Text" xml:space="preserve">
+    <value>From first-row sea-front apartments to elegant nearby luxury units in premium areas.</value>
+  </data>
+
+	<data name="Why3Title" xml:space="preserve">
+    <value>Hotel-Style Furnishing</value>
+  </data>
+	<data name="Why3Text" xml:space="preserve">
+    <value>Carefully selected furniture, tasteful interiors, and a refined atmosphere in every stay.</value>
+  </data>
+
+	<data name="Why4Title" xml:space="preserve">
+    <value>Trusted Experience</value>
+  </data>
+	<data name="Why4Text" xml:space="preserve">
+    <value>More than ten years of experience serving guests with quality, professionalism, and care.</value>
+  </data>
+
+	<data name="CtaTitle" xml:space="preserve">
+    <value>Discover your ideal stay in Alexandria</value>
+  </data>
+	<data name="CtaText" xml:space="preserve">
+    <value>Whether you are looking for a direct sea-front apartment or a luxury furnished unit with hotel-style comfort, we are ready to help you find the perfect option.</value>
+  </data>
+	<data name="CtaButton" xml:space="preserve">
+    <value>Contact Us</value>
+  </data>
+</root>

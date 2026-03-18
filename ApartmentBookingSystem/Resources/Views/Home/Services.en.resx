@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+	<data name="ServicesTitle" xml:space="preserve">
+    <value>Services</value>
+  </data>
+	<data name="HeroBadge" xml:space="preserve">
+    <value>Premium Hospitality Experience</value>
+  </data>
+	<data name="HeroTitle" xml:space="preserve">
+    <value>Services designed for a comfortable and exceptional stay</value>
+  </data>
+	<data name="HeroSubtitle" xml:space="preserve">
+    <value>Discover a complete set of carefully selected services designed to give you comfort, luxury, safety, and a memorable stay by the sea.</value>
+  </data>
+	<data name="IntroTitle" xml:space="preserve">
+    <value>Our Services</value>
+  </data>
+	<data name="IntroText" xml:space="preserve">
+    <value>We provide a comprehensive range of services to ensure a comfortable, enjoyable, and premium-level stay for all guests.</value>
+  </data>
+
+	<data name="PoolsTitleAr" xml:space="preserve">
+    <value>Close to private hotel pools</value>
+  </data>
+	<data name="PoolsTitleEn" xml:space="preserve">
+    <value>Close to the private pools of some hotels</value>
+  </data>
+	<data name="PoolsDesc" xml:space="preserve">
+    <value>All our apartments are close to private hotel pools, allowing you to enjoy a premium day-use experience just steps from your stay.</value>
+  </data>
+	<data name="PoolsFeature1" xml:space="preserve">
+    <value>Hotel swimming pools</value>
+  </data>
+	<data name="PoolsFeature2" xml:space="preserve">
+    <value>Comfortable relaxation area</value>
+  </data>
+	<data name="PoolsFeature3" xml:space="preserve">
+    <value>Beverage service</value>
+  </data>
+	<data name="PoolsFeature4" xml:space="preserve">
+    <value>Umbrellas and sun loungers</value>
+  </data>
+
+	<data name="GymTitleAr" xml:space="preserve">
+    <value>Apartments close to arcades and gyms</value>
+  </data>
+	<data name="GymTitleEn" xml:space="preserve">
+    <value>Apartments close to arcades and gyms</value>
+  </data>
+	<data name="GymDesc" xml:space="preserve">
+    <value>Our apartments are near high-quality gyms and sports facilities to provide a premium fitness experience during your stay.</value>
+  </data>
+	<data name="GymFeature1" xml:space="preserve">
+    <value>Latest sports equipment</value>
+  </data>
+	<data name="GymFeature2" xml:space="preserve">
+    <value>Advanced cardio machines</value>
+  </data>
+	<data name="GymFeature3" xml:space="preserve">
+    <value>Free weights and variety</value>
+  </data>
+	<data name="GymFeature4" xml:space="preserve">
+    <value>Well air-conditioned and ventilated</value>
+  </data>
+
+	<data name="KitchenTitleAr" xml:space="preserve">
+    <value>Complete kitchen appliances in apartments</value>
+  </data>
+	<data name="KitchenTitleEn" xml:space="preserve">
+    <value>Complete kitchen appliances in apartments</value>
+  </data>
+	<data name="KitchenDesc" xml:space="preserve">
+    <value>Every apartment includes a fully equipped kitchen with everything an Egyptian family needs to prepare meals comfortably.</value>
+  </data>
+	<data name="KitchenFeature1" xml:space="preserve">
+    <value>Fully equipped kitchens</value>
+  </data>
+	<data name="KitchenFeature2" xml:space="preserve">
+    <value>Complete cooking appliances</value>
+  </data>
+	<data name="KitchenFeature3" xml:space="preserve">
+    <value>Modern devices</value>
+  </data>
+	<data name="KitchenFeature4" xml:space="preserve">
+    <value>Elegant service</value>
+  </data>
+
+	<data name="SeaViewTitleAr" xml:space="preserve">
+    <value>Stunning and direct sea views</value>
+  </data>
+	<data name="SeaViewTitleEn" xml:space="preserve">
+    <value>Stunning and direct sea views</value>
+  </data>
+	<data name="SeaViewDesc" xml:space="preserve">
+    <value>All apartments enjoy a direct sea view that makes every stay feel open, calm, and unforgettable.</value>
+  </data>
+	<data name="SeaViewFeature1" xml:space="preserve">
+    <value>All apartments have a direct sea view</value>
+  </data>
+	<data name="SeaViewFeature2" xml:space="preserve">
+    <value>Your apartment is an island within the sea</value>
+  </data>
+	<data name="SeaViewFeature3" xml:space="preserve">
+    <value>Distinctive balcony experience</value>
+  </data>
+	<data name="SeaViewFeature4" xml:space="preserve">
+    <value>Bedrooms directly facing the sea</value>
+  </data>
+
+	<data name="CctvTitleAr" xml:space="preserve">
+    <value>CCTV cameras on all floors</value>
+  </data>
+	<data name="CctvTitleEn" xml:space="preserve">
+    <value>CCTV cameras on all floors</value>
+  </data>
+	<data name="CctvDesc" xml:space="preserve">
+    <value>Security and safety are exceptional, with surveillance cameras throughout the towers and around the clock monitoring.</value>
+  </data>
+	<data name="CctvFeature1" xml:space="preserve">
+    <value>CCTV cameras on all floors</value>
+  </data>
+	<data name="CctvFeature2" xml:space="preserve">
+    <value>Surveillance cameras at all entrances</value>
+  </data>
+	<data name="CctvFeature3" xml:space="preserve">
+    <value>Security department available 24/7</value>
+  </data>
+	<data name="CctvFeature4" xml:space="preserve">
+    <value>24-hour central monitoring room</value>
+  </data>
+
+	<data name="SecurityTitleAr" xml:space="preserve">
+    <value>24/7 Security</value>
+  </data>
+	<data name="SecurityTitleEn" xml:space="preserve">
+    <value>24/7 Security</value>
+  </data>
+	<data name="SecurityDesc" xml:space="preserve">
+    <value>We provide an integrated security system around the clock to ensure safety, confidence, and complete peace of mind.</value>
+  </data>
+	<data name="SecurityFeature1" xml:space="preserve">
+    <value>24/7 security</value>
+  </data>
+	<data name="SecurityFeature2" xml:space="preserve">
+    <value>Surveillance cameras</value>
+  </data>
+	<data name="SecurityFeature3" xml:space="preserve">
+    <value>Secure access system</value>
+  </data>
+	<data name="SecurityFeature4" xml:space="preserve">
+    <value>Comprehensive protection</value>
+  </data>
+
+	<data name="TransportTitleAr" xml:space="preserve">
+    <value>Transportation service coming very soon</value>
+  </data>
+	<data name="TransportTitleEn" xml:space="preserve">
+    <value>Transportation service coming very soon</value>
+  </data>
+	<data name="TransportDesc" xml:space="preserve">
+    <value>Transportation options are available in front of and next to the tower, ensuring easy mobility at any time.</value>
+  </data>
+	<data name="TransportFeature1" xml:space="preserve">
+    <value>Apartments close to all transport services</value>
+  </data>
+	<data name="TransportFeature2" xml:space="preserve">
+    <value>Comfortable air-conditioned cars</value>
+  </data>
+	<data name="TransportFeature3" xml:space="preserve">
+    <value>Professional drivers</value>
+  </data>
+	<data name="TransportFeature4" xml:space="preserve">
+    <value>Tourist bus across Alexandria</value>
+  </data>
+
+	<data name="WifiTitleAr" xml:space="preserve">
+    <value>High-speed Wi-Fi in VIP apartments</value>
+  </data>
+	<data name="WifiTitleEn" xml:space="preserve">
+    <value>High-speed Wi-Fi in VIP apartments</value>
+  </data>
+	<data name="WifiDesc" xml:space="preserve">
+    <value>Free high-speed Wi-Fi is available in VIP apartments and common areas to keep you connected at all times.</value>
+  </data>
+	<data name="WifiFeature1" xml:space="preserve">
+    <value>Free Wi-Fi in VIP apartments</value>
+  </data>
+	<data name="WifiFeature2" xml:space="preserve">
+    <value>High speed</value>
+  </data>
+	<data name="WifiFeature3" xml:space="preserve">
+    <value>Available in apartments</value>
+  </data>
+	<data name="WifiFeature4" xml:space="preserve">
+    <value>Stable connection</value>
+  </data>
+
+	<data name="ReceptionTitleAr" xml:space="preserve">
+    <value>Customer reception service from 1 PM to 10 PM</value>
+  </data>
+	<data name="ReceptionTitleEn" xml:space="preserve">
+    <value>Customer reception service from 1 PM to 10 PM</value>
+  </data>
+	<data name="ReceptionDesc" xml:space="preserve">
+    <value>A professional concierge team is ready to assist with guest needs, reservations, and coordination throughout the day.</value>
+  </data>
+	<data name="ReceptionFeature1" xml:space="preserve">
+    <value>Tower reception office</value>
+  </data>
+	<data name="ReceptionFeature2" xml:space="preserve">
+    <value>Reception outside the tower</value>
+  </data>
+	<data name="ReceptionFeature3" xml:space="preserve">
+    <value>Premium elevators for guest service</value>
+  </data>
+	<data name="ReceptionFeature4" xml:space="preserve">
+    <value>Daily guest assistance</value>
+  </data>
+
+	<data name="RestaurantsTitleAr" xml:space="preserve">
+    <value>Famous restaurants and cafés around us</value>
+  </data>
+	<data name="RestaurantsTitleEn" xml:space="preserve">
+    <value>Famous restaurants and cafés around us</value>
+  </data>
+	<data name="RestaurantsDesc" xml:space="preserve">
+    <value>The location is surrounded by popular restaurants, cafés, and food options for a complete lifestyle experience.</value>
+  </data>
+	<data name="RestaurantsFeature1" xml:space="preserve">
+    <value>Famous restaurants nearby</value>
+  </data>
+	<data name="RestaurantsFeature2" xml:space="preserve">
+    <value>Cafés and social spots</value>
+  </data>
+	<data name="RestaurantsFeature3" xml:space="preserve">
+    <value>Variety of food choices</value>
+  </data>
+	<data name="RestaurantsFeature4" xml:space="preserve">
+    <value>Easy access anytime</value>
+  </data>
+</root>

@@ -1,0 +1,35 @@
+# Build
+bin/
+obj/
+Debug/
+Release/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+log/
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+appsettings.json
+appsettings.Development.json
+appsettings.*.json
+!appsettings.example.json
+.env
+.env.*
+
+# Node (optional)
+node_modules/
+
+# Uploads
+wwwroot/uploads/

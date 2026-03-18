@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+	
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>1.3</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="ServicesTitle" xml:space="preserve">
+    <value>الخدمات</value>
+  </data>
+	<data name="HeroBadge" xml:space="preserve">
+    <value>تجربة ضيافة فاخرة</value>
+  </data>
+	<data name="HeroTitle" xml:space="preserve">
+    <value>خدمات مصممة لإقامة مريحة ومميزة</value>
+  </data>
+	<data name="HeroSubtitle" xml:space="preserve">
+    <value>اكتشف مجموعة متكاملة من الخدمات المختارة بعناية لتمنحك الراحة والرفاهية والأمان وإقامة لا تُنسى بجوار البحر.</value>
+  </data>
+	<data name="IntroTitle" xml:space="preserve">
+    <value>خدماتنا</value>
+  </data>
+	<data name="IntroText" xml:space="preserve">
+    <value>نقدم مجموعة شاملة من الخدمات لضمان إقامة مريحة وممتعة بمستوى راقٍ لجميع الضيوف.</value>
+  </data>
+
+	<data name="PoolsTitleAr" xml:space="preserve">
+    <value>قريب من المسابح الخاصة لبعض الفنادق</value>
+  </data>
+	<data name="PoolsTitleEn" xml:space="preserve">
+    <value>قريب من المسابح الخاصة لبعض الفنادق</value>
+  </data>
+	<data name="PoolsDesc" xml:space="preserve">
+    <value>جميع شققنا تتميز بقربها من المسابح الخاصة لبعض الفنادق، مما يمنحك فرصة الاستمتاع بتجربة يوم مميز بكل سهولة.</value>
+  </data>
+	<data name="PoolsFeature1" xml:space="preserve">
+    <value>مسابح فنادق مميزة</value>
+  </data>
+	<data name="PoolsFeature2" xml:space="preserve">
+    <value>منطقة استرخاء مريحة</value>
+  </data>
+	<data name="PoolsFeature3" xml:space="preserve">
+    <value>خدمة مشروبات</value>
+  </data>
+	<data name="PoolsFeature4" xml:space="preserve">
+    <value>شماسي وكراسي استلقاء</value>
+  </data>
+
+	<data name="GymTitleAr" xml:space="preserve">
+    <value>الشقق قريبة من صالات الألعاب والجيم</value>
+  </data>
+	<data name="GymTitleEn" xml:space="preserve">
+    <value>الشقق قريبة من صالات الألعاب والجيم</value>
+  </data>
+	<data name="GymDesc" xml:space="preserve">
+    <value>جميع شققنا قريبة من الجيمات والمرافق الرياضية الراقية لتضمن لك تجربة لياقة متكاملة خلال الإقامة.</value>
+  </data>
+	<data name="GymFeature1" xml:space="preserve">
+    <value>أحدث الأجهزة الرياضية</value>
+  </data>
+	<data name="GymFeature2" xml:space="preserve">
+    <value>أجهزة كارديو متطورة</value>
+  </data>
+	<data name="GymFeature3" xml:space="preserve">
+    <value>أوزان حرة متنوعة</value>
+  </data>
+	<data name="GymFeature4" xml:space="preserve">
+    <value>تكييف وتهوية ممتازة</value>
+  </data>
+
+	<data name="KitchenTitleAr" xml:space="preserve">
+    <value>أدوات مطبخ كاملة بالشقق</value>
+  </data>
+	<data name="KitchenTitleEn" xml:space="preserve">
+    <value>أدوات مطبخ كاملة بالشقق</value>
+  </data>
+	<data name="KitchenDesc" xml:space="preserve">
+    <value>جميع الشقق تحتوي على مطبخ مجهز بالكامل بكل ما تحتاجه الأسرة المصرية لتحضير الطعام بسهولة وراحة.</value>
+  </data>
+	<data name="KitchenFeature1" xml:space="preserve">
+    <value>مطبخ مجهز بالكامل</value>
+  </data>
+	<data name="KitchenFeature2" xml:space="preserve">
+    <value>أجهزة طهي كاملة</value>
+  </data>
+	<data name="KitchenFeature3" xml:space="preserve">
+    <value>أجهزة حديثة</value>
+  </data>
+	<data name="KitchenFeature4" xml:space="preserve">
+    <value>تصميم أنيق</value>
+  </data>
+
+	<data name="SeaViewTitleAr" xml:space="preserve">
+    <value>إطلالات مميزة ومباشرة للبحر</value>
+  </data>
+	<data name="SeaViewTitleEn" xml:space="preserve">
+    <value>إطلالات مميزة ومباشرة للبحر</value>
+  </data>
+	<data name="SeaViewDesc" xml:space="preserve">
+    <value>تتميز جميع الشقق بإطلالة مباشرة على البحر تجعل الإقامة أكثر هدوءًا وجمالًا وتميزًا.</value>
+  </data>
+	<data name="SeaViewFeature1" xml:space="preserve">
+    <value>جميع الشقق بإطلالة مباشرة على البحر</value>
+  </data>
+	<data name="SeaViewFeature2" xml:space="preserve">
+    <value>شقتك كأنها جزيرة داخل البحر</value>
+  </data>
+	<data name="SeaViewFeature3" xml:space="preserve">
+    <value>بلكونات بإطلالة مميزة</value>
+  </data>
+	<data name="SeaViewFeature4" xml:space="preserve">
+    <value>غرف نوم على البحر مباشرة</value>
+  </data>
+
+	<data name="CctvTitleAr" xml:space="preserve">
+    <value>كاميرات مراقبة بجميع الأدوار</value>
+  </data>
+	<data name="CctvTitleEn" xml:space="preserve">
+    <value>كاميرات مراقبة بجميع الأدوار</value>
+  </data>
+	<data name="CctvDesc" xml:space="preserve">
+    <value>الأمان والسلامة في الشقق استثنائية، مع كاميرات مراقبة في جميع الأبراج وعلى مدار الساعة.</value>
+  </data>
+	<data name="CctvFeature1" xml:space="preserve">
+    <value>كاميرات مراقبة بجميع الأدوار</value>
+  </data>
+	<data name="CctvFeature2" xml:space="preserve">
+    <value>كاميرات على جميع المداخل</value>
+  </data>
+	<data name="CctvFeature3" xml:space="preserve">
+    <value>قسم أمن متاح 24/7</value>
+  </data>
+	<data name="CctvFeature4" xml:space="preserve">
+    <value>غرفة مراقبة مركزية 24 ساعة</value>
+  </data>
+
+	<data name="SecurityTitleAr" xml:space="preserve">
+    <value>أمن 24/7</value>
+  </data>
+	<data name="SecurityTitleEn" xml:space="preserve">
+    <value>أمن 24/7</value>
+  </data>
+	<data name="SecurityDesc" xml:space="preserve">
+    <value>نظام أمني متكامل على مدار الساعة لضمان راحتك وسلامتك وتوفير بيئة إقامة آمنة للجميع.</value>
+  </data>
+	<data name="SecurityFeature1" xml:space="preserve">
+    <value>أمن على مدار الساعة</value>
+  </data>
+	<data name="SecurityFeature2" xml:space="preserve">
+    <value>كاميرات مراقبة</value>
+  </data>
+	<data name="SecurityFeature3" xml:space="preserve">
+    <value>نظام دخول آمن</value>
+  </data>
+	<data name="SecurityFeature4" xml:space="preserve">
+    <value>حماية شاملة</value>
+  </data>
+
+	<data name="TransportTitleAr" xml:space="preserve">
+    <value>خدمة النقل قريباً جداً</value>
+  </data>
+	<data name="TransportTitleEn" xml:space="preserve">
+    <value>خدمة النقل قريباً جداً</value>
+  </data>
+	<data name="TransportDesc" xml:space="preserve">
+    <value>جميع وسائل النقل متوفرة أمام البرج وبجواره، مما يضمن سهولة التنقل في أي وقت.</value>
+  </data>
+	<data name="TransportFeature1" xml:space="preserve">
+    <value>الشقق قريبة من جميع وسائل النقل</value>
+  </data>
+	<data name="TransportFeature2" xml:space="preserve">
+    <value>سيارات مريحة ومكيفة</value>
+  </data>
+	<data name="TransportFeature3" xml:space="preserve">
+    <value>سائقون محترفون</value>
+  </data>
+	<data name="TransportFeature4" xml:space="preserve">
+    <value>أتوبيس سياحي في أنحاء الإسكندرية</value>
+  </data>
+
+	<data name="WifiTitleAr" xml:space="preserve">
+    <value>واي فاي عالي السرعة في الشقق VIP</value>
+  </data>
+	<data name="WifiTitleEn" xml:space="preserve">
+    <value>واي فاي عالي السرعة في الشقق VIP</value>
+  </data>
+	<data name="WifiDesc" xml:space="preserve">
+    <value>يتوفر واي فاي مجاني عالي السرعة في الشقق VIP والمناطق المشتركة لضمان بقائك متصلًا دائمًا.</value>
+  </data>
+	<data name="WifiFeature1" xml:space="preserve">
+    <value>واي فاي مجاني في الشقق VIP</value>
+  </data>
+	<data name="WifiFeature2" xml:space="preserve">
+    <value>سرعة عالية</value>
+  </data>
+	<data name="WifiFeature3" xml:space="preserve">
+    <value>متاح في الشقق</value>
+  </data>
+	<data name="WifiFeature4" xml:space="preserve">
+    <value>اتصال ثابت</value>
+  </data>
+
+	<data name="ReceptionTitleAr" xml:space="preserve">
+    <value>خدمة استقبال العميل من 1 ظهراً إلى 10 مساءً</value>
+  </data>
+	<data name="ReceptionTitleEn" xml:space="preserve">
+    <value>خدمة استقبال العميل من 1 ظهراً إلى 10 مساءً</value>
+  </data>
+	<data name="ReceptionDesc" xml:space="preserve">
+    <value>فريق استقبال محترف جاهز لمساعدتك في احتياجاتك المختلفة وتنظيم الخدمات طوال اليوم.</value>
+  </data>
+	<data name="ReceptionFeature1" xml:space="preserve">
+    <value>مكتب استقبال بالبرج</value>
+  </data>
+	<data name="ReceptionFeature2" xml:space="preserve">
+    <value>استقبال خارج البرج</value>
+  </data>
+	<data name="ReceptionFeature3" xml:space="preserve">
+    <value>مصاعد مميزة لخدمة الضيوف</value>
+  </data>
+	<data name="ReceptionFeature4" xml:space="preserve">
+    <value>مساعدة يومية للضيوف</value>
+  </data>
+
+	<data name="RestaurantsTitleAr" xml:space="preserve">
+    <value>كل المطاعم المشهورة حولنا والكافيهات</value>
+  </data>
+	<data name="RestaurantsTitleEn" xml:space="preserve">
+    <value>كل المطاعم المشهورة حولنا والكافيهات</value>
+  </data>
+	<data name="RestaurantsDesc" xml:space="preserve">
+    <value>الموقع محاط بأشهر المطاعم والكافيهات وأماكن الخروج لتجربة إقامة متكاملة وممتعة.</value>
+  </data>
+	<data name="RestaurantsFeature1" xml:space="preserve">
+    <value>مطاعم مشهورة قريبة</value>
+  </data>
+	<data name="RestaurantsFeature2" xml:space="preserve">
+    <value>كافيهات وأماكن اجتماعية</value>
+  </data>
+	<data name="RestaurantsFeature3" xml:space="preserve">
+    <value>تنوع كبير في المأكولات</value>
+  </data>
+	<data name="RestaurantsFeature4" xml:space="preserve">
+    <value>سهولة الوصول في أي وقت</value>
+  </data>
+</root>

@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+
+<div class="auth-container">
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="auth-user">
+            <div class="auth-avatar">👤</div>
+
+            <div class="auth-info">
+                <span class="auth-name">
+                    @(UserManager.GetUserAsync(User).Result?.FullName)!
+                </span>
+                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="auth-manage">
+                    @Localizer["Manage"]
+                </a>
+            </div>
+        </div>
+
+        <form asp-area="Identity"
+              asp-page="/Account/Logout"
+              asp-route-returnUrl="@Url.Action("Index", "Home")">
+            <button class="btn-logout">@Localizer["Logout"]</button>
+        </form>
+    }
+    else
+    {
+        <a asp-area="Identity" asp-page="/Account/Login" class="btn-login">
+            @Localizer["Login"]
+        </a>
+
+        <a asp-area="Identity" asp-page="/Account/Register" class="btn-register">
+            @Localizer["GetStarted"]
+        </a>
+    }
+
+</div>

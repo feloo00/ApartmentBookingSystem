@@ -1,0 +1,145 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    var whatsappNumber = "201000000000";
+    var whatsappMessage = Uri.EscapeDataString("Hello, I have submitted a booking request. My name is: [Your Name], and my phone number is: [Your Phone Number].");
+    var whatsappLink = $"https://wa.me/{whatsappNumber}?text={whatsappMessage}";
+}
+
+<style>
+    body {
+        background: linear-gradient(180deg, #fffaf3 0%, #f7fcff 100%);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .success-page {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 0;
+    }
+
+    .success-card {
+        max-width: 720px;
+        width: 100%;
+        background: #fff;
+        border-radius: 28px;
+        padding: 40px 30px;
+        text-align: center;
+        box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+    }
+
+    .success-icon {
+        font-size: 4rem;
+        margin-bottom: 16px;
+    }
+
+    .success-title {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #111827;
+        margin-bottom: 12px;
+    }
+
+    .success-text {
+        color: #6b7280;
+        font-size: 1.05rem;
+        margin-bottom: 18px;
+        line-height: 1.8;
+    }
+
+    .success-note-box {
+        background: linear-gradient(135deg, #f0fdf4, #eff6ff);
+        border: 1px solid #dbeafe;
+        border-radius: 20px;
+        padding: 18px;
+        margin: 0 auto 24px;
+        max-width: 600px;
+        text-align: start;
+    }
+
+    .success-note-title {
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: #111827;
+        margin-bottom: 8px;
+    }
+
+    .success-note-text {
+        color: #4b5563;
+        line-height: 1.8;
+        margin-bottom: 0;
+    }
+
+    .success-actions {
+        display: flex;
+        justify-content: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+    }
+
+    .success-btn {
+        display: inline-block;
+        padding: 12px 22px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #29b6f6, #26c6da);
+        color: white;
+        text-decoration: none;
+        font-weight: 700;
+        transition: 0.25s ease;
+    }
+
+        .success-btn:hover {
+            color: white;
+            transform: translateY(-1px);
+        }
+
+    .whatsapp-btn {
+        display: inline-block;
+        padding: 12px 22px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+        color: white;
+        text-decoration: none;
+        font-weight: 700;
+        transition: 0.25s ease;
+        box-shadow: 0 10px 22px rgba(34, 197, 94, 0.20);
+    }
+
+        .whatsapp-btn:hover {
+            color: white;
+            transform: translateY(-1px);
+        }
+</style>
+
+<div class="container success-page">
+    <div class="success-card">
+        <div class="success-icon">✅</div>
+
+        <div class="success-title">@Localizer["SuccessTitle"]</div>
+
+        <div class="success-text">
+            @Localizer["SuccessText"]
+        </div>
+
+        <div class="success-note-box">
+            <div class="success-note-title">@Localizer["WhatsappNoteTitle"]</div>
+            <p class="success-note-text">
+                @Localizer["WhatsappNoteText"]
+            </p>
+        </div>
+
+        <div class="success-actions">
+            <a href="@whatsappLink" target="_blank" class="whatsapp-btn">
+                @Localizer["WhatsappButton"]
+            </a>
+
+            <a asp-controller="Home" asp-action="Index" class="success-btn">
+                @Localizer["BackToHome"]
+            </a>
+        </div>
+    </div>
+</div>

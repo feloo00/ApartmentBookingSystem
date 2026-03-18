@@ -1,0 +1,865 @@
+﻿@using System.Globalization
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+    var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var returnUrl = Context.Request.Path + Context.Request.QueryString;
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+
+    var hideContactSection =
+        // (currentController == "Home" && currentAction == "Details") ||
+        (currentController == "Apartments" &&
+        (currentAction == "Index" || currentAction == "Create" || currentAction == "Edit" || currentAction == "Delete")) ||
+        (currentController == "Bookings" && currentAction == "AdminDashboard");
+}
+
+<!DOCTYPE html>
+
+<html lang="@currentCulture"
+      dir="@(currentCulture == "ar" ? "rtl" : "ltr")">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Madinaty</title>
+    
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ApartmentBookingSystem.styles.css" asp-append-version="true" />
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(180deg, #fffaf3 0%, #f7fcff 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* =========================
+                   NAVBAR
+                ========================= */
+        .custom-navbar {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+
+        .brand-wrap {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        .brand-logo-shell {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(135deg, #0f172a, #1d4ed8, #0f766e);
+            box-shadow: 0 14px 28px rgba(15, 23, 42, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .brand-wrap:hover .brand-logo-shell {
+            transform: scale(1.04) rotate(-2deg);
+            box-shadow: 0 18px 34px rgba(15, 23, 42, 0.22);
+        }
+
+        .brand-logo {
+            width: 300%;
+            height: 300%;
+            object-fit: cover;
+             /* border-radius: 50%; 
+             background: white;  */
+        }
+
+        .brand-text-wrap {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.05;
+        }
+
+        .brand-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #0f172a;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-subtitle {
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: #0f766e;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .custom-nav-link {
+            color: #334155 !important;
+            font-weight: 700;
+            padding: 10px 16px !important;
+            border-radius: 999px;
+            transition: all 0.25s ease;
+        }
+
+            .custom-nav-link:hover {
+                color: #0f172a !important;
+                background: linear-gradient(135deg, rgba(41,182,246,0.14), rgba(255,183,77,0.18));
+                transform: translateY(-1px);
+            }
+
+            .custom-nav-link.active-link {
+                color: #0f172a !important;
+                background: linear-gradient(135deg, rgba(41,182,246,0.16), rgba(255,183,77,0.22));
+                box-shadow: inset 0 0 0 1px rgba(41,182,246,0.18);
+            }
+
+        .custom-toggler {
+            border: none;
+            box-shadow: none !important;
+        }
+
+        .nav-right-tools {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .language-switcher {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f1f5f9;
+            padding: 5px;
+            border-radius: 16px;
+            box-shadow: inset 0 0 0 1px rgba(203, 213, 225, 0.8);
+        }
+
+        .lang-option {
+            text-decoration: none;
+            color: #475569;
+            font-weight: 700;
+            padding: 9px 16px;
+            border-radius: 12px;
+            transition: all 0.25s ease;
+            font-size: 0.95rem;
+        }
+
+            .lang-option:hover {
+                color: #0f172a;
+                background: rgba(255,255,255,0.8);
+            }
+
+            .lang-option.active {
+                background: linear-gradient(135deg, #1d4ed8, #0f766e);
+                color: #fff;
+                box-shadow: 0 8px 20px rgba(29, 78, 216, 0.20);
+            }
+
+        .nav-right-tools .nav-link,
+        .nav-right-tools .btn,
+        .nav-right-tools a {
+            font-weight: 700;
+        }
+
+        /* =========================
+                   MAIN
+                ========================= */
+        .page-main {
+            min-height: 55vh;
+        }
+
+        /* =========================
+                   CONTACT / FOOTER
+                ========================= */
+        .contact-footer-section {
+            margin-top: 60px;
+            padding-bottom: 24px;
+        }
+
+        .contact-footer-shell {
+            position: relative;
+            overflow: hidden;
+            border-radius: 34px;
+            padding: 38px 28px 30px;
+            background: linear-gradient(135deg, rgba(255, 183, 77, 0.92), rgba(79, 195, 247, 0.88));
+            border: 1px solid rgba(255,255,255,0.58);
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.09);
+            isolation: isolate;
+        }
+
+            .contact-footer-shell::before {
+                content: "";
+                position: absolute;
+                width: 240px;
+                height: 240px;
+                border-radius: 50%;
+                top: -80px;
+                right: -70px;
+                background: rgba(255,255,255,0.16);
+                filter: blur(10px);
+            }
+
+            .contact-footer-shell::after {
+                content: "";
+                position: absolute;
+                width: 180px;
+                height: 180px;
+                border-radius: 50%;
+                bottom: -50px;
+                left: -35px;
+                background: rgba(255,255,255,0.12);
+                filter: blur(10px);
+            }
+
+        .contact-footer-head,
+        .contact-cards-grid,
+        .contact-footer-links {
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-footer-head {
+            text-align: center;
+            max-width: 760px;
+            margin: 0 auto 28px;
+        }
+
+        .contact-footer-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 15px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.54);
+            border: 1px solid rgba(255,255,255,0.72);
+            backdrop-filter: blur(8px);
+            color: #0f766e;
+            font-size: 0.84rem;
+            font-weight: 900;
+            margin-bottom: 14px;
+        }
+
+        .contact-footer-title {
+            font-size: 2.15rem;
+            font-weight: 900;
+            color: #111827;
+            margin-bottom: 12px;
+            line-height: 1.18;
+        }
+
+        .contact-footer-subtitle {
+            color: #374151;
+            font-size: 1rem;
+            line-height: 1.9;
+            margin-bottom: 0;
+        }
+
+        .contact-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .contact-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-height: 104px;
+            padding: 18px 16px;
+            border-radius: 24px;
+            background: rgba(255,255,255,0.22);
+            border: 1px solid rgba(255,255,255,0.40);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.05);
+        }
+
+        .contact-card-link {
+            text-decoration: none;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+        }
+
+            .contact-card-link:hover {
+                transform: translateY(-5px);
+                background: rgba(255,255,255,0.30);
+                border-color: rgba(255,255,255,0.54);
+                box-shadow: 0 18px 32px rgba(15, 23, 42, 0.09);
+            }
+
+        .contact-card-icon-wrap {
+            width: 58px;
+            height: 58px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid rgba(255,255,255,0.36);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
+        }
+
+        .contact-card-icon-img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .contact-card-emoji {
+            font-size: 1.4rem;
+            line-height: 1;
+        }
+
+        .contact-card-text {
+            min-width: 0;
+        }
+
+        .contact-card-label {
+            font-size: 0.92rem;
+            font-weight: 900;
+            color: #0f766e;
+            margin-bottom: 5px;
+        }
+
+        .contact-card-value {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #1f2937;
+            line-height: 1.55;
+        }
+
+        .contact-footer-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 22px;
+            flex-wrap: wrap;
+            padding-top: 4px;
+        }
+
+            .contact-footer-links a {
+                text-decoration: none;
+                color: #0f172a;
+                font-weight: 800;
+                font-size: 0.96rem;
+                transition: opacity 0.25s ease, transform 0.25s ease;
+            }
+
+                .contact-footer-links a:hover {
+                    opacity: 0.75;
+                    transform: translateY(-1px);
+                }
+
+        .contact-footer-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding: 18px 4px 0;
+        }
+
+        .contact-footer-brand-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .contact-footer-brand-logo-shell {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(135deg, #0f172a, #1d4ed8, #0f766e);
+            box-shadow: 0 10px 18px rgba(15, 23, 42, 0.14);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-footer-brand-logo {
+            width: 300%;
+            height: 300%;
+            object-fit: cover;
+            /* border-radius: 50%;
+                     background: white;  */
+        }
+
+        .contact-footer-brand {
+            font-size: 1rem;
+            font-weight: 900;
+            color: #0f172a;
+        }
+
+        .contact-footer-copy {
+            font-size: 0.9rem;
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        .contact-footer-copy-right {
+            font-size: 0.92rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        /* =========================
+                   RESPONSIVE
+                ========================= */
+        @@media (max-width: 1199px) {
+            .contact-cards-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @@media (max-width: 991.98px) {
+            .custom-navbar {
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+            .brand-logo-shell {
+                width: 56px;
+                height: 56px;
+            }
+
+            .brand-title {
+                font-size: 1.2rem;
+            }
+
+            .navbar-collapse {
+                margin-top: 14px;
+                background: rgba(255, 255, 255, 0.96);
+                border-radius: 20px;
+                padding: 14px;
+                box-shadow: 0 14px 30px rgba(0, 0, 0, 0.06);
+            }
+
+            .custom-nav-link {
+                width: 100%;
+                border-radius: 14px;
+            }
+
+            .nav-right-tools {
+                margin-top: 14px;
+                padding-top: 12px;
+                border-top: 1px solid #e5e7eb;
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .language-switcher {
+                justify-content: center;
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .contact-footer-section {
+                margin-top: 46px;
+                padding-bottom: 18px;
+            }
+
+            .contact-footer-shell {
+                border-radius: 26px;
+                padding: 24px 16px 20px;
+            }
+
+            .contact-footer-title {
+                font-size: 1.6rem;
+            }
+
+            .contact-footer-subtitle {
+                font-size: 0.96rem;
+            }
+
+            .contact-cards-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .contact-footer-links {
+                gap: 14px;
+            }
+
+            .contact-footer-bottom {
+                justify-content: center;
+                text-align: center;
+            }
+
+            .contact-footer-brand-wrap {
+                justify-content: center;
+            }
+        }
+
+
+
+
+        /* ===== AUTH AREA ===== */
+
+        .auth-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ===== USER ===== */
+        .auth-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.7);
+            border: 1px solid #e2e8f0;
+        }
+
+        .auth-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg,#1d4ed8,#0f766e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .auth-info {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+
+        .auth-name {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .auth-manage {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-decoration: none;
+        }
+
+            .auth-manage:hover {
+                color: #0f172a;
+            }
+
+        /* ===== BUTTONS ===== */
+
+        .btn-login {
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-weight: 700;
+            color: #334155;
+            transition: 0.2s;
+        }
+
+            .btn-login:hover {
+                background: #f1f5f9;
+            }
+
+        .btn-register {
+            text-decoration: none;
+            padding: 9px 18px;
+            border-radius: 999px;
+            font-weight: 800;
+            color: #fff;
+            background: linear-gradient(135deg,#1d4ed8,#0f766e);
+            box-shadow: 0 8px 18px rgba(29,78,216,0.25);
+            transition: 0.25s;
+        }
+
+            .btn-register:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 12px 22px rgba(29,78,216,0.35);
+            }
+
+        /* ===== LOGOUT ===== */
+
+        .btn-logout {
+            border: none;
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg,#ef4444,#dc2626);
+            box-shadow: 0 8px 18px rgba(239,68,68,0.25);
+            transition: 0.25s;
+        }
+
+            .btn-logout:hover {
+                transform: translateY(-1px);
+            }
+
+        /* ===== RESPONSIVE ===== */
+
+        @@media (max-width: 991px) {
+            .auth-container
+
+        {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .btn-login,
+        .btn-register,
+        .btn-logout {
+            width: 100%;
+            text-align: center;
+        }
+
+        .auth-user {
+            justify-content: center;
+        }
+
+        }
+
+        .custom-nav-link.contact-highlight {
+            background: linear-gradient(135deg, rgba(41,182,246,0.18), rgba(255,183,77,0.25));
+            color: #0f172a !important;
+            font-weight: 800;
+        }
+    </style>
+    
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
+            <div class="container">
+
+                <a class="navbar-brand brand-wrap" asp-controller="Home" asp-action="Index">
+                    <div class="brand-logo-shell">
+                        <img src="~/images/madinaty-logo.png" alt="Madinaty Logo" class="brand-logo" />
+                    </div>
+
+                    <div class="brand-text-wrap">
+                        <span class="brand-title">Madinaty</span>
+                        <span class="brand-subtitle">@Localizer["BrandSubtitle"]</span>
+                    </div>
+                </a>
+
+                <button class="navbar-toggler custom-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#mainNavbar"
+                        aria-controls="mainNavbar"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="mainNavbar">
+
+                    <ul class="navbar-nav mx-auto align-items-lg-center gap-lg-2">
+
+                        <li class="nav-item">
+                            <a class="nav-link custom-nav-link @(currentController == "Home" && currentAction == "Index" ? "active-link" : "")"
+                               asp-controller="Home" asp-action="Index">
+                                @Localizer["Home"]
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link custom-nav-link @(currentController == "Home" && currentAction == "Services" ? "active-link" : "")"
+                               asp-controller="Home" asp-action="Services">
+                                @Localizer["Services"]
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link custom-nav-link @(currentController == "Home" && currentAction == "AboutUs" ? "active-link" : "")"
+                               asp-controller="Home" asp-action="AboutUs">
+                                @Localizer["AboutUs"]
+                            </a>
+                        </li>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link custom-nav-link @(currentController == "Apartments" && currentAction == "Index" ? "active-link" : "")"
+                                   asp-controller="Apartments"
+                                   asp-action="Index">
+                                    @Localizer["Apartments"]
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link custom-nav-link @(currentController == "Bookings" && currentAction == "AdminDashboard" ? "active-link" : "")"
+                                   asp-controller="Bookings"
+                                   asp-action="AdminDashboard">
+                                    @Localizer["Dashboard"]
+                                </a>
+                            </li>
+                        }
+
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link custom-nav-link @(currentController == "Bookings" && currentAction == "MyBookings" ? "active-link" : "")"
+                                   asp-controller="Bookings"
+                                   asp-action="MyBookings">
+                                    @Localizer["MyBookings"]
+                                </a>
+                            </li>
+                        }
+
+                        @if (!User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link custom-nav-link contact-highlight"
+                                   href="#global-contact-section">
+                                    @Localizer["ContactUs"]
+                                </a>
+                            </li>
+                        }
+                    </ul>
+
+                    <div class="nav-right-tools">
+
+                        <div class="language-switcher">
+                            <a asp-controller="Language"
+                               asp-action="SetLanguage"
+                               asp-route-culture="ar"
+                               asp-route-returnUrl="@returnUrl"
+                               class="lang-option @(currentCulture == "ar" ? "active" : "")">
+                                عربي
+                            </a>
+
+                            <a asp-controller="Language"
+                               asp-action="SetLanguage"
+                               asp-route-culture="en"
+                               asp-route-returnUrl="@returnUrl"
+                               class="lang-option @(currentCulture == "en" ? "active" : "")">
+                                English
+                            </a>
+                        </div>
+
+                        <partial name="_LoginPartial" />
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+   
+        
+    </header>
+
+    <div class="container page-main">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    @if (!hideContactSection)
+{
+    <div id="global-contact-section" class="contact-footer-section">
+        <div class="container">
+
+            <div class="contact-footer-shell">
+                <div class="contact-footer-head">
+                    <div class="contact-footer-badge">@Localizer["ContactBadge"]</div>
+                    <h2 class="contact-footer-title">@Localizer["ContactTitle"]</h2>
+                    <p class="contact-footer-subtitle">
+                        @Localizer["ContactSubtitle"]
+                    </p>
+                </div>
+
+                <div class="contact-cards-grid">
+                    <a href="https://www.facebook.com/yourpage" target="_blank" class="contact-card contact-card-link">
+                        <div class="contact-card-icon-wrap">
+                            <img src="~/images/icons/facebook.png" alt="Facebook" class="contact-card-icon-img" />
+                        </div>
+                        <div class="contact-card-text">
+                            <div class="contact-card-label">@Localizer["Facebook"]</div>
+                            <div class="contact-card-value">@Localizer["FacebookText"]</div>
+                        </div>
+                    </a>
+
+                    <a href="https://wa.me/201000000000" target="_blank" class="contact-card contact-card-link">
+                        <div class="contact-card-icon-wrap">
+                            <img src="~/images/icons/whatsapp.png" alt="WhatsApp" class="contact-card-icon-img" />
+                        </div>
+                        <div class="contact-card-text">
+                            <div class="contact-card-label">@Localizer["WhatsApp"]</div>
+                            <div class="contact-card-value">@Localizer["WhatsAppText"]</div>
+                        </div>
+                    </a>
+
+                    <a href="tel:+201000000000" class="contact-card contact-card-link">
+                        <div class="contact-card-icon-wrap">
+                            <span class="contact-card-emoji">📞</span>
+                        </div>
+                        <div class="contact-card-text">
+                            <div class="contact-card-label">@Localizer["Phone"]</div>
+                            <div class="contact-card-value">@Localizer["MagedPhone"]</div>
+                        </div>
+                    </a>
+
+                    <a href="https://maps.google.com/?q=Alexandria,Egypt" target="_blank" class="contact-card contact-card-link">
+                        <div class="contact-card-icon-wrap">
+                            <span class="contact-card-emoji">📍</span>
+                        </div>
+                        <div class="contact-card-text">
+                            <div class="contact-card-label">@Localizer["Location"]</div>
+                            <div class="contact-card-value">@Localizer["LocationText"]</div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="contact-footer-links">
+                    <a asp-controller="Home" asp-action="Index">@Localizer["Home"]</a>
+                    <a asp-controller="Home" asp-action="Services">@Localizer["Services"]</a>
+                    <a asp-controller="Home" asp-action="AboutUs">@Localizer["AboutUs"]</a>
+                    @* <a asp-controller="Home" asp-action="Privacy">@Localizer["Privacy"]</a> *@
+                </div>
+            </div>
+            
+            <div class="contact-footer-bottom">
+                <div class="contact-footer-brand-wrap">
+                    <div class="contact-footer-brand-logo-shell">
+                        <img src="~/images/madinaty-logo.png" alt="Madinaty Logo" class="contact-footer-brand-logo" />
+                    </div>
+                    <div>
+                        <div class="contact-footer-brand">Madinaty</div>
+                        <div class="contact-footer-copy">@Localizer["FooterDescription"]</div>
+                    </div>
+                </div>
+
+                <div class="contact-footer-copy-right">
+                    @Localizer["Copyright"]
+                </div>
+            </div>
+
+        </div>
+    </div>
+    }
+
+    
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

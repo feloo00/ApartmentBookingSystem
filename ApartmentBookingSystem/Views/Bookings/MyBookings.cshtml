@@ -1,0 +1,733 @@
+﻿@model IEnumerable<ApartmentBookingSystem.Models.Booking>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = "My Bookings";
+
+    string currentStatus = ViewBag.CurrentStatus as string ?? "";
+    string currentSearch = ViewBag.CurrentSearch as string ?? "";
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+}
+
+<style>
+    body {
+        background: linear-gradient(180deg, #fffaf3 0%, #f7fcff 100%);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .my-bookings-page {
+        padding: 35px 0 50px;
+    }
+
+    .page-title {
+        font-size: 2.3rem;
+        font-weight: 800;
+        color: #111827;
+        margin-bottom: 8px;
+    }
+
+    .page-subtitle {
+        color: #6b7280;
+        margin-bottom: 28px;
+    }
+
+    .message-box {
+        background: #dcfce7;
+        color: #166534;
+        padding: 14px 18px;
+        border-radius: 16px;
+        margin-bottom: 20px;
+        font-weight: 700;
+    }
+
+    .toolbar-card {
+        background: #fff;
+        border-radius: 24px;
+        padding: 18px;
+        box-shadow: 0 14px 35px rgba(0,0,0,0.08);
+        margin-bottom: 24px;
+    }
+
+    .toolbar-form {
+        display: grid;
+        grid-template-columns: 1.3fr 1fr auto;
+        gap: 14px;
+        align-items: center;
+    }
+
+    .form-control,
+    .form-select {
+        border-radius: 14px;
+        padding: 12px 14px;
+        border: 1px solid #d1d5db;
+    }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #29b6f6;
+            box-shadow: 0 0 0 0.2rem rgba(41, 182, 246, 0.15);
+        }
+
+    .search-btn {
+        border: none;
+        padding: 12px 20px;
+        border-radius: 14px;
+        font-weight: 700;
+        color: white;
+        background: linear-gradient(135deg, #29b6f6, #26c6da);
+        box-shadow: 0 10px 20px rgba(41, 182, 246, 0.24);
+    }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+        }
+
+    .filters-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 16px;
+    }
+
+    .filter-chip {
+        padding: 10px 16px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 700;
+        background: #f3f4f6;
+        color: #374151;
+        transition: 0.3s ease;
+    }
+
+        .filter-chip:hover {
+            color: #111827;
+            transform: translateY(-2px);
+        }
+
+        .filter-chip.active {
+            background: linear-gradient(135deg, #29b6f6, #26c6da);
+            color: white;
+        }
+
+    .booking-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .booking-card {
+        background: #fff;
+        border-radius: 28px;
+        padding: 20px;
+        box-shadow: 0 16px 35px rgba(0,0,0,0.08);
+        transition: 0.3s ease;
+    }
+
+        .booking-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.10);
+        }
+
+    .booking-grid {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 22px;
+        align-items: center;
+    }
+
+    .booking-image img {
+        width: 100%;
+        height: 190px;
+        object-fit: cover;
+        border-radius: 22px;
+    }
+
+    .booking-title {
+        font-size: 1.45rem;
+        font-weight: 800;
+        color: #111827;
+        margin-bottom: 8px;
+    }
+
+    .booking-location {
+        color: #6b7280;
+        margin-bottom: 14px;
+        font-size: 1rem;
+    }
+
+    .details-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 14px;
+        margin-bottom: 16px;
+    }
+
+    .detail-box {
+        background: linear-gradient(135deg, #f8fbff, #fff8ef);
+        border-radius: 18px;
+        padding: 14px 16px;
+    }
+
+    .detail-label {
+        color: #6b7280;
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+    }
+
+    .detail-value {
+        color: #111827;
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
+    .status-badges {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+        margin-bottom: 16px;
+    }
+
+    .badge-custom {
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-size: 0.88rem;
+        font-weight: 700;
+        display: inline-block;
+    }
+
+    .badge-approved {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .badge-pending {
+        background: #fef3c7;
+        color: #b45309;
+    }
+
+    .badge-rejected {
+        background: #fee2e2;
+        color: #b91c1c;
+    }
+
+    .progress-wrapper {
+        margin-bottom: 18px;
+    }
+
+    .progress-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #6b7280;
+        margin-bottom: 8px;
+    }
+
+    .custom-progress {
+        width: 100%;
+        height: 10px;
+        background: #e5e7eb;
+        border-radius: 999px;
+        overflow: hidden;
+    }
+
+    .custom-progress-bar {
+        height: 100%;
+        border-radius: 999px;
+    }
+
+    .progress-pending {
+        width: 50%;
+        background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    }
+
+    .progress-approved {
+        width: 100%;
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+    }
+
+    .progress-rejected {
+        width: 100%;
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+    }
+
+    .action-row {
+        margin-top: 18px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .custom-btn {
+        display: inline-block;
+        text-decoration: none;
+        padding: 11px 18px;
+        border-radius: 14px;
+        font-weight: 700;
+        transition: 0.3s ease;
+        border: none;
+    }
+
+    .details-btn {
+        background: linear-gradient(135deg, #29b6f6, #26c6da);
+        color: white;
+        box-shadow: 0 10px 20px rgba(41, 182, 246, 0.24);
+    }
+
+        .details-btn:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+    .proof-btn {
+        background: #eef6ff;
+        color: #2563eb;
+    }
+
+        .proof-btn:hover {
+            color: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+    .cancel-btn {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        color: white;
+    }
+
+        .cancel-btn:hover {
+            transform: translateY(-2px);
+        }
+
+    .empty-box {
+        background: white;
+        border-radius: 28px;
+        padding: 40px 25px;
+        text-align: center;
+        box-shadow: 0 16px 35px rgba(0,0,0,0.08);
+    }
+
+    .empty-icon {
+        font-size: 3.5rem;
+        margin-bottom: 12px;
+    }
+
+    .empty-title {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: #111827;
+        margin-bottom: 10px;
+    }
+
+    .empty-text {
+        color: #6b7280;
+        margin-bottom: 20px;
+    }
+
+    .pagination-wrapper {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 28px;
+    }
+
+    .page-link-custom {
+        min-width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: white;
+        color: #374151;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
+        .page-link-custom.active {
+            background: linear-gradient(135deg, #29b6f6, #26c6da);
+            color: white;
+        }
+
+    @@media (max-width: 768px) {
+        .toolbar-form {
+            grid-template-columns: 1fr;
+        }
+
+        .booking-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .booking-image img {
+            height: 220px;
+        }
+    }
+
+
+    .proof-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(17, 24, 39, 0.65);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        padding: 20px;
+    }
+
+        .proof-modal.show {
+            display: flex;
+        }
+
+    .proof-modal-content {
+        background: white;
+        border-radius: 24px;
+        max-width: 900px;
+        width: 100%;
+        padding: 18px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        position: relative;
+        animation: proofModalFade 0.25s ease;
+    }
+
+    .proof-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+    }
+
+    .proof-modal-title {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: #111827;
+    }
+
+    .proof-modal-close {
+        width: 42px;
+        height: 42px;
+        border: none;
+        border-radius: 50%;
+        background: #f3f4f6;
+        font-size: 1.3rem;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+        .proof-modal-close:hover {
+            background: #e5e7eb;
+            transform: scale(1.05);
+        }
+
+    .proof-modal-body {
+        text-align: center;
+    }
+
+        .proof-modal-body img {
+            max-width: 100%;
+            max-height: 75vh;
+            border-radius: 18px;
+            object-fit: contain;
+        }
+
+    @@keyframes proofModalFade {
+        from
+
+    {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    }
+</style>
+
+
+<div class="container my-bookings-page">
+    <h2 class="page-title">@Localizer["PageTitle"]</h2>
+    <p class="page-subtitle">@Localizer["PageSubtitle"]</p>
+
+    @if (TempData["BookingMessage"] != null)
+    {
+        <div class="message-box">
+            @TempData["BookingMessage"]
+        </div>
+    }
+
+    <div class="toolbar-card">
+        <form method="get" asp-action="MyBookings" class="toolbar-form">
+            <input type="text"
+                   name="search"
+                   value="@currentSearch"
+                   class="form-control"
+                   placeholder="@Localizer["SearchPlaceholder"]" />
+
+            <select name="status" class="form-select">
+                <option value="">@Localizer["AllStatuses"]</option>
+                <option value="pending" selected="@(currentStatus == "pending")">@Localizer["Pending"]</option>
+                <option value="approved" selected="@(currentStatus == "approved")">@Localizer["Approved"]</option>
+                <option value="rejected" selected="@(currentStatus == "rejected")">@Localizer["Rejected"]</option>
+            </select>
+
+            <button type="submit" class="search-btn">@Localizer["Search"]</button>
+        </form>
+
+        <div class="filters-row">
+            <a asp-action="MyBookings"
+               asp-route-search="@currentSearch"
+               class="filter-chip @(string.IsNullOrEmpty(currentStatus) ? "active" : "")">
+                @Localizer["All"]
+            </a>
+
+            <a asp-action="MyBookings"
+               asp-route-status="pending"
+               asp-route-search="@currentSearch"
+               class="filter-chip @(currentStatus == "pending" ? "active" : "")">
+                @Localizer["Pending"]
+            </a>
+
+            <a asp-action="MyBookings"
+               asp-route-status="approved"
+               asp-route-search="@currentSearch"
+               class="filter-chip @(currentStatus == "approved" ? "active" : "")">
+                @Localizer["Approved"]
+            </a>
+
+            <a asp-action="MyBookings"
+               asp-route-status="rejected"
+               asp-route-search="@currentSearch"
+               class="filter-chip @(currentStatus == "rejected" ? "active" : "")">
+                @Localizer["Rejected"]
+            </a>
+        </div>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="booking-list">
+            @foreach (var booking in Model)
+            {
+                var imageUrl = booking.Apartment?.Images != null && booking.Apartment.Images.Any()
+                ? booking.Apartment.Images.First().ImageUrl
+                : "/images/no-image.png";
+
+                var bookingBadgeClass = booking.BookingStatus == "Approved"
+                ? "badge-approved"
+                : booking.BookingStatus == "Cancelled"
+                ? "badge-rejected"
+                : "badge-pending";
+
+                var paymentBadgeClass = booking.PaymentStatus == "Confirmed"
+                ? "badge-approved"
+                : booking.PaymentStatus == "Rejected"
+                ? "badge-rejected"
+                : "badge-pending";
+
+                var progressClass = booking.BookingStatus == "Approved"
+                ? "progress-approved"
+                : booking.BookingStatus == "Cancelled"
+                ? "progress-rejected"
+                : "progress-pending";
+
+                var bookingIcon = booking.BookingStatus == "Approved"
+                ? "✅"
+                : booking.BookingStatus == "Cancelled"
+                ? "❌"
+                : "⏳";
+
+                <div class="booking-card">
+                    <div class="booking-grid">
+                        <div class="booking-image">
+                            <img src="@imageUrl" alt="@booking.Apartment?.Title" />
+                        </div>
+
+                        <div>
+                            <div class="booking-title">@bookingIcon @booking.Apartment?.Title</div>
+                            <div class="booking-location">
+                                📍 @booking.Apartment?.City - @booking.Apartment?.Area
+                            </div>
+
+                            <div class="details-grid">
+                                <div class="detail-box">
+                                    <div class="detail-label">@Localizer["CheckIn"]</div>
+                                    <div class="detail-value">@booking.CheckInDate.ToString("yyyy-MM-dd")</div>
+                                </div>
+
+                                <div class="detail-box">
+                                    <div class="detail-label">@Localizer["CheckOut"]</div>
+                                    <div class="detail-value">@booking.CheckOutDate.ToString("yyyy-MM-dd")</div>
+                                </div>
+
+                                <div class="detail-box">
+                                    <div class="detail-label">@Localizer["Nights"]</div>
+                                    <div class="detail-value">@((booking.CheckOutDate - booking.CheckInDate).Days)</div>
+                                </div>
+
+                                <div class="detail-box">
+                                    <div class="detail-label">@Localizer["TotalPrice"]</div>
+                                    <div class="detail-value">@booking.TotalPrice @Localizer["CurrencyEGP"]</div>
+                                </div>
+
+                                <div class="detail-box">
+                                    <div class="detail-label">@Localizer["PaymentMethod"]</div>
+                                    <div class="detail-value">@booking.PaymentMethod</div>
+                                </div>
+
+                                <div class="detail-box">
+                                    <div class="detail-label">@Localizer["BookedAt"]</div>
+                                    <div class="detail-value">@booking.CreatedAt.ToString("yyyy-MM-dd hh:mm tt")</div>
+                                </div>
+                            </div>
+
+                            <div class="status-badges">
+                                <span class="badge-custom @bookingBadgeClass">
+                                    @Localizer["Booking"]: @booking.BookingStatus
+                                </span>
+
+                                <span class="badge-custom @paymentBadgeClass">
+                                    @Localizer["Payment"]: @booking.PaymentStatus
+                                </span>
+                            </div>
+
+                            @if (!string.IsNullOrEmpty(booking.AdminNotes))
+                            {
+                                <div style="margin-top:10px; padding:10px; background:#fee2e2; border-radius:10px;">
+                                    <strong>@Localizer["AdminNote"]:</strong> @booking.AdminNotes
+                                </div>
+                            }
+
+                            <div class="progress-wrapper">
+                                <div class="progress-labels">
+                                    <span>@Localizer["Submitted"]</span>
+                                    <span>@Localizer["Reviewed"]</span>
+                                    <span>@Localizer["FinalStatus"]</span>
+                                </div>
+
+                                <div class="custom-progress">
+                                    <div class="custom-progress-bar @progressClass"></div>
+                                </div>
+                            </div>
+
+                            <div class="action-row">
+                                <a asp-controller="Home"
+                                   asp-action="Details"
+                                   asp-route-id="@booking.ApartmentId"
+                                   class="custom-btn details-btn">
+                                    @Localizer["ViewApartment"]
+                                </a>
+
+                                @if (!string.IsNullOrEmpty(booking.PaymentProofImageUrl))
+                                {
+                                    <button type="button"
+                                            class="custom-btn proof-btn proof-btn-trigger"
+                                            data-image="@booking.PaymentProofImageUrl">
+                                        @Localizer["ViewPaymentProof"]
+                                    </button>
+                                }
+
+                                @if (booking.BookingStatus == "Pending")
+                                {
+                                    <form asp-action="CancelBooking" method="post" style="display:inline;">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@booking.Id" />
+                                        <button type="submit" class="custom-btn cancel-btn"
+                                                onclick="return confirm('@Localizer["CancelBookingConfirm"]')">
+                                            @Localizer["CancelBooking"]
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (totalPages > 1)
+        {
+            <div class="pagination-wrapper">
+                @for (int i = 1; i <= totalPages; i++)
+                {
+                    <a asp-action="MyBookings"
+                       asp-route-page="@i"
+                       asp-route-status="@currentStatus"
+                       asp-route-search="@currentSearch"
+                       class="page-link-custom @(i == currentPage ? "active" : "")">
+                        @i
+                    </a>
+                }
+            </div>
+        }
+    }
+    else
+    {
+        <div class="empty-box">
+            <div class="empty-icon">📭</div>
+            <div class="empty-title">@Localizer["NoBookingsFound"]</div>
+            <div class="empty-text">
+                @Localizer["EmptyText"]
+            </div>
+
+            <a asp-controller="Home" asp-action="Index" class="custom-btn details-btn">
+                @Localizer["ExploreApartments"]
+            </a>
+        </div>
+    }
+</div>
+
+<div class="proof-modal" id="proofModal">
+    <div class="proof-modal-content">
+        <div class="proof-modal-header">
+            <div class="proof-modal-title">@Localizer["PaymentProofPreview"]</div>
+            <button type="button" class="proof-modal-close" id="closeProofModal">&times;</button>
+        </div>
+
+        <div class="proof-modal-body">
+            <img id="proofModalImage" src="" alt="@Localizer["PaymentProofPreview"]" />
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const modal = document.getElementById("proofModal");
+            const modalImage = document.getElementById("proofModalImage");
+            const closeBtn = document.getElementById("closeProofModal");
+            const triggers = document.querySelectorAll(".proof-btn-trigger");
+
+            triggers.forEach(btn => {
+                btn.addEventListener("click", function () {
+                    const imageUrl = this.getAttribute("data-image");
+                    modalImage.src = imageUrl;
+                    modal.classList.add("show");
+                });
+            });
+
+            closeBtn.addEventListener("click", function () {
+                modal.classList.remove("show");
+                modalImage.src = "";
+            });
+
+            modal.addEventListener("click", function (e) {
+                if (e.target === modal) {
+                    modal.classList.remove("show");
+                    modalImage.src = "";
+                }
+            });
+
+            document.addEventListener("keydown", function (e) {
+                if (e.key === "Escape") {
+                    modal.classList.remove("show");
+                    modalImage.src = "";
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,167 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<style>
+    body {
+        background: linear-gradient(180deg,#fffaf3 0%,#f7fcff 100%);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .login-page {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 0;
+    }
+
+    .login-card {
+        background: white;
+        border-radius: 28px;
+        padding: 40px;
+        width: 100%;
+        max-width: 520px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+    }
+
+    .login-title {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #111827;
+        margin-bottom: 6px;
+    }
+
+    .login-subtitle {
+        color: #6b7280;
+        margin-bottom: 28px;
+    }
+
+    .form-control {
+        border-radius: 14px;
+        padding: 12px 14px;
+        border: 1px solid #d1d5db;
+    }
+
+        .form-control:focus {
+            border-color: #29b6f6;
+            box-shadow: 0 0 0 0.2rem rgba(41,182,246,0.15);
+        }
+
+    .form-floating {
+        margin-bottom: 18px;
+    }
+
+    .remember-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 18px;
+        color: #4b5563;
+        font-weight: 600;
+    }
+
+    .login-btn {
+        width: 100%;
+        border: none;
+        border-radius: 16px;
+        padding: 14px;
+        font-weight: 800;
+        color: white;
+        background: linear-gradient(135deg,#29b6f6,#26c6da);
+        box-shadow: 0 12px 24px rgba(41,182,246,0.25);
+        transition: 0.3s;
+    }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 30px rgba(41,182,246,0.35);
+        }
+
+    .extra-links {
+        margin-top: 22px;
+        text-align: center;
+        color: #6b7280;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+        .extra-links a {
+            color: #29b6f6;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+            .extra-links a:hover {
+                text-decoration: underline;
+            }
+
+    .form-check-input:checked {
+        background-color: #29b6f6;
+        border-color: #29b6f6;
+    }
+</style>
+
+<div class="login-page">
+    <div class="login-card">
+
+        <div class="login-title">Welcome Back</div>
+        <div class="login-subtitle">
+            Log in to manage your bookings and continue your reservation.
+        </div>
+
+        <form id="account" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+            <div class="form-floating">
+                <input asp-for="Input.Email"
+                       class="form-control"
+                       autocomplete="username"
+                       aria-required="true"
+                       placeholder="name@example.com" />
+                <label asp-for="Input.Email" class="form-label">Email</label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating">
+                <input asp-for="Input.Password"
+                       type="password"
+                       class="form-control"
+                       autocomplete="current-password"
+                       aria-required="true"
+                       placeholder="Password" />
+                <label asp-for="Input.Password" class="form-label">Password</label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <div class="remember-row">
+                <input class="form-check-input" asp-for="Input.RememberMe" />
+                <label asp-for="Input.RememberMe" class="form-check-label mb-0">
+                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                </label>
+            </div>
+
+            <button id="login-submit" type="submit" class="login-btn">
+                Log in
+            </button>
+
+            <div class="extra-links">
+                <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                <div>
+                    Don’t have an account?
+                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Create one</a>
+                </div>
+                <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

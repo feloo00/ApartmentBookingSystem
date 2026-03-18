@@ -1,0 +1,663 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["ServicesTitle"];
+}
+
+<style>
+    body {
+        background: linear-gradient(180deg, #fffaf3 0%, #f7fbff 55%, #ffffff 100%);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .services-page {
+        padding: 42px 0 80px;
+    }
+
+    .services-hero {
+        position: relative;
+        overflow: hidden;
+        border-radius: 34px;
+        padding: 85px 50px;
+        margin-bottom: 38px;
+        color: white;
+        background: linear-gradient(135deg, rgba(15, 118, 110, 0.78), rgba(41, 182, 246, 0.75)), url('/images/services/heroo.jpg');
+        background-size: cover;
+        background-position: center;
+        box-shadow: 0 28px 65px rgba(0,0,0,0.16);
+        isolation: isolate;
+    }
+
+        .services-hero::before {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            top: -90px;
+            right: -70px;
+            background: rgba(255,255,255,0.10);
+            filter: blur(4px);
+            z-index: 0;
+        }
+
+        .services-hero::after {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            bottom: -80px;
+            left: -50px;
+            background: rgba(255,255,255,0.08);
+            z-index: 0;
+        }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 820px;
+    }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.16);
+        border: 1px solid rgba(255,255,255,0.18);
+        backdrop-filter: blur(10px);
+        font-size: 0.86rem;
+        font-weight: 800;
+        margin-bottom: 18px;
+        letter-spacing: 0.3px;
+    }
+
+    .hero-title {
+        font-size: 3.15rem;
+        font-weight: 900;
+        line-height: 1.12;
+        margin-bottom: 16px;
+    }
+
+    .hero-subtitle {
+        font-size: 1.08rem;
+        line-height: 1.95;
+        opacity: 0.96;
+        max-width: 760px;
+        margin-bottom: 0;
+    }
+
+    .services-intro {
+        text-align: center;
+        margin: 0 auto 34px;
+        max-width: 840px;
+    }
+
+    .intro-title {
+        font-size: 2.1rem;
+        font-weight: 900;
+        color: #111827;
+        margin-bottom: 12px;
+        line-height: 1.3;
+    }
+
+    .intro-text {
+        color: #6b7280;
+        line-height: 1.9;
+        font-size: 1rem;
+    }
+
+    .services-stack {
+        display: grid;
+        gap: 28px;
+    }
+
+    .service-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 30px;
+        background: rgba(255,255,255,0.92);
+        border: 1px solid rgba(255,255,255,0.68);
+        box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+        backdrop-filter: blur(12px);
+        transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.13);
+        }
+
+        .service-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(41,182,246,0.04), rgba(255,183,77,0.05));
+            pointer-events: none;
+        }
+
+    .service-inner {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        align-items: center;
+        gap: 24px;
+        padding: 18px;
+    }
+
+    .service-card:nth-child(even) .service-inner {
+        grid-template-columns: 1fr 380px;
+    }
+
+    .service-image-wrap {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        height: 250px;
+        min-height: 250px;
+        border-radius: 24px;
+        box-shadow: 0 12px 28px rgba(0,0,0,0.10);
+    }
+
+    .service-card:nth-child(even) .service-image-wrap {
+        order: 2;
+    }
+
+    .service-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.55s ease;
+    }
+
+    .service-card:hover .service-image {
+        transform: scale(1.06);
+    }
+
+    .service-image-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.16));
+    }
+
+    .service-content {
+        padding: 8px 10px 8px 4px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .service-top {
+        margin-bottom: 14px;
+    }
+
+    .service-title-ar {
+        font-size: 1.55rem;
+        font-weight: 900;
+        color: #111827;
+        margin-bottom: 6px;
+        line-height: 1.35;
+    }
+
+    .service-title-en {
+        color: #0f766e;
+        font-size: 0.94rem;
+        font-weight: 800;
+        margin-bottom: 0;
+        letter-spacing: 0.2px;
+    }
+
+    .service-divider {
+        width: 58px;
+        height: 4px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #0f766e, #29b6f6);
+        margin: 14px 0 18px;
+    }
+
+    .service-description {
+        color: #4b5563;
+        line-height: 1.9;
+        font-size: 0.98rem;
+        margin-bottom: 18px;
+    }
+
+    .service-features {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        align-content: start;
+    }
+
+    .service-feature {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 54px;
+        padding: 12px 14px;
+        border-radius: 16px;
+        color: #374151;
+        font-size: 0.93rem;
+        font-weight: 700;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+        background: linear-gradient(135deg, #fffdf9, #fff6ed);
+        border: 1px solid rgba(15, 118, 110, 0.08);
+    }
+
+    .feature-check {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #dcfce7;
+        color: #166534;
+        font-size: 0.86rem;
+        font-weight: 900;
+    }
+
+    .fade-up {
+        opacity: 0;
+        transform: translateY(24px);
+        animation: fadeUp 0.8s ease forwards;
+    }
+
+    .delay-1 {
+        animation-delay: 0.04s;
+    }
+
+    .delay-2 {
+        animation-delay: 0.08s;
+    }
+
+    .delay-3 {
+        animation-delay: 0.12s;
+    }
+
+    .delay-4 {
+        animation-delay: 0.16s;
+    }
+
+    .delay-5 {
+        animation-delay: 0.20s;
+    }
+
+    .delay-6 {
+        animation-delay: 0.24s;
+    }
+
+    .delay-7 {
+        animation-delay: 0.28s;
+    }
+
+    .delay-8 {
+        animation-delay: 0.32s;
+    }
+
+    .delay-9 {
+        animation-delay: 0.36s;
+    }
+
+    .delay-10 {
+        animation-delay: 0.40s;
+    }
+
+    @@keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(24px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@media (max-width: 1199px) {
+        .service-inner,
+        .service-card:nth-child(even) .service-inner {
+            grid-template-columns: 320px 1fr;
+            gap: 20px;
+        }
+
+        .service-card:nth-child(even) .service-image-wrap {
+            order: 2;
+        }
+
+        .service-image-wrap {
+            height: 230px;
+            min-height: 230px;
+        }
+
+        .service-content {
+            padding: 4px 6px 4px 0;
+        }
+    }
+
+    @@media (max-width: 991px) {
+        .services-hero {
+            padding: 64px 32px;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .service-inner,
+        .service-card:nth-child(even) .service-inner {
+            grid-template-columns: 1fr;
+            gap: 18px;
+        }
+
+        .service-card:nth-child(even) .service-image-wrap {
+            order: 0;
+        }
+
+        .service-image-wrap {
+            height: 250px;
+            min-height: 250px;
+        }
+
+        .service-content {
+            padding: 0 6px 6px;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .services-page {
+            padding: 26px 0 60px;
+        }
+
+        .services-hero {
+            border-radius: 26px;
+            padding: 48px 22px;
+            margin-bottom: 28px;
+        }
+
+        .hero-title {
+            font-size: 2rem;
+        }
+
+        .hero-subtitle {
+            font-size: 0.98rem;
+            line-height: 1.85;
+        }
+
+        .intro-title {
+            font-size: 1.7rem;
+        }
+
+        .service-inner {
+            padding: 14px;
+        }
+
+        .service-title-ar {
+            font-size: 1.28rem;
+        }
+
+        .service-features {
+            grid-template-columns: 1fr;
+        }
+
+        .service-image-wrap {
+            height: 210px;
+            min-height: 210px;
+            border-radius: 20px;
+        }
+
+        .service-content {
+            padding: 0 4px 4px;
+        }
+
+        .service-description {
+            font-size: 0.95rem;
+        }
+    }
+</style>
+
+<div class="container services-page">
+
+    <div class="services-hero fade-up">
+        <div class="hero-content">
+            <div class="hero-badge">✨ @Localizer["HeroBadge"]</div>
+            <h1 class="hero-title">@Localizer["HeroTitle"]</h1>
+            <p class="hero-subtitle">@Localizer["HeroSubtitle"]</p>
+        </div>
+    </div>
+
+    <div class="services-intro fade-up delay-1">
+        <div class="intro-title">@Localizer["IntroTitle"]</div>
+        <div class="intro-text">@Localizer["IntroText"]</div>
+    </div>
+
+    <div class="services-stack">
+
+        <div class="service-card fade-up delay-1">
+            <div class="service-inner">
+                <div class="service-image-wrap">
+                    <img src="~/images/services/pool.jpg" asp-append-version="true" alt="Luxury swimming pool with modern design" class="service-image" />
+                    <div class="service-image-overlay"></div>
+                </div>
+                <div class="service-content">
+                    <div class="service-top">
+                        <div class="service-title-ar">@Localizer["PoolsTitleAr"]</div>
+                        <div class="service-title-en">@Localizer["PoolsTitleEn"]</div>
+                    </div>
+                    <div class="service-description">@Localizer["PoolsDesc"]</div>
+                    <div class="service-features">
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["PoolsFeature1"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["PoolsFeature2"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["PoolsFeature3"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["PoolsFeature4"]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-card fade-up delay-2">
+            <div class="service-inner">
+                <div class="service-image-wrap">
+                    <img src="~/images/services/gym.jpg" asp-append-version="true" alt="Modern gym with premium equipment" class="service-image" />
+                    <div class="service-image-overlay"></div>
+                </div>
+                <div class="service-content">
+                    <div class="service-top">
+                        <div class="service-title-ar">@Localizer["GymTitleAr"]</div>
+                        <div class="service-title-en">@Localizer["GymTitleEn"]</div>
+                    </div>
+                    <div class="service-description">@Localizer["GymDesc"]</div>
+                    <div class="service-features">
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["GymFeature1"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["GymFeature2"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["GymFeature3"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["GymFeature4"]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-card fade-up delay-3">
+            <div class="service-inner">
+                <div class="service-image-wrap">
+                    <img src="~/images/services/kitchen.jpg" asp-append-version="true" alt="Fully equipped modern kitchen" class="service-image" />
+                    <div class="service-image-overlay"></div>
+                </div>
+                <div class="service-content">
+                    <div class="service-top">
+                        <div class="service-title-ar">@Localizer["KitchenTitleAr"]</div>
+                        <div class="service-title-en">@Localizer["KitchenTitleEn"]</div>
+                    </div>
+                    <div class="service-description">@Localizer["KitchenDesc"]</div>
+                    <div class="service-features">
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["KitchenFeature1"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["KitchenFeature2"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["KitchenFeature3"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["KitchenFeature4"]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-card fade-up delay-4">
+            <div class="service-inner">
+                <div class="service-image-wrap">
+                    <img src="~/images/services/seaview.jpg" asp-append-version="true" alt="Sea view apartment balcony" class="service-image" />
+                    <div class="service-image-overlay"></div>
+                </div>
+                <div class="service-content">
+                    <div class="service-top">
+                        <div class="service-title-ar">@Localizer["SeaViewTitleAr"]</div>
+                        <div class="service-title-en">@Localizer["SeaViewTitleEn"]</div>
+                    </div>
+                    <div class="service-description">@Localizer["SeaViewDesc"]</div>
+                    <div class="service-features">
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["SeaViewFeature1"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["SeaViewFeature2"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["SeaViewFeature3"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["SeaViewFeature4"]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-card fade-up delay-5">
+            <div class="service-inner">
+                <div class="service-image-wrap">
+                    <img src="~/images/services/cctv.jpg" asp-append-version="true" alt="CCTV monitoring and surveillance system" class="service-image" />
+                    <div class="service-image-overlay"></div>
+                </div>
+                <div class="service-content">
+                    <div class="service-top">
+                        <div class="service-title-ar">@Localizer["CctvTitleAr"]</div>
+                        <div class="service-title-en">@Localizer["CctvTitleEn"]</div>
+                    </div>
+                    <div class="service-description">@Localizer["CctvDesc"]</div>
+                    <div class="service-features">
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["CctvFeature1"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["CctvFeature2"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["CctvFeature3"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["CctvFeature4"]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-card fade-up delay-6">
+            <div class="service-inner">
+                <div class="service-image-wrap">
+                    <img src="~/images/services/security.jpg" asp-append-version="true" alt="Private security service and gated safety" class="service-image" />
+                    <div class="service-image-overlay"></div>
+                </div>
+                <div class="service-content">
+                    <div class="service-top">
+                        <div class="service-title-ar">@Localizer["SecurityTitleAr"]</div>
+                        <div class="service-title-en">@Localizer["SecurityTitleEn"]</div>
+                    </div>
+                    <div class="service-description">@Localizer["SecurityDesc"]</div>
+                    <div class="service-features">
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["SecurityFeature1"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["SecurityFeature2"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["SecurityFeature3"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["SecurityFeature4"]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-card fade-up delay-7">
+            <div class="service-inner">
+                <div class="service-image-wrap">
+                    <img src="~/images/services/transport.jpg" asp-append-version="true" alt="Comfortable transportation and private transfer service" class="service-image" />
+                    <div class="service-image-overlay"></div>
+                </div>
+                <div class="service-content">
+                    <div class="service-top">
+                        <div class="service-title-ar">@Localizer["TransportTitleAr"]</div>
+                        <div class="service-title-en">@Localizer["TransportTitleEn"]</div>
+                    </div>
+                    <div class="service-description">@Localizer["TransportDesc"]</div>
+                    <div class="service-features">
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["TransportFeature1"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["TransportFeature2"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["TransportFeature3"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["TransportFeature4"]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-card fade-up delay-8">
+            <div class="service-inner">
+                <div class="service-image-wrap">
+                    <img src="~/images/services/wifi.jpg" asp-append-version="true" alt="Fast and reliable WiFi connection" class="service-image" />
+                    <div class="service-image-overlay"></div>
+                </div>
+                <div class="service-content">
+                    <div class="service-top">
+                        <div class="service-title-ar">@Localizer["WifiTitleAr"]</div>
+                        <div class="service-title-en">@Localizer["WifiTitleEn"]</div>
+                    </div>
+                    <div class="service-description">@Localizer["WifiDesc"]</div>
+                    <div class="service-features">
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["WifiFeature1"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["WifiFeature2"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["WifiFeature3"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["WifiFeature4"]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-card fade-up delay-9">
+            <div class="service-inner">
+                <div class="service-image-wrap">
+                    <img src="~/images/services/reception.jpg" asp-append-version="true" alt="Professional reception and guest support" class="service-image" />
+                    <div class="service-image-overlay"></div>
+                </div>
+                <div class="service-content">
+                    <div class="service-top">
+                        <div class="service-title-ar">@Localizer["ReceptionTitleAr"]</div>
+                        <div class="service-title-en">@Localizer["ReceptionTitleEn"]</div>
+                    </div>
+                    <div class="service-description">@Localizer["ReceptionDesc"]</div>
+                    <div class="service-features">
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["ReceptionFeature1"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["ReceptionFeature2"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["ReceptionFeature3"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["ReceptionFeature4"]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-card fade-up delay-10">
+            <div class="service-inner">
+                <div class="service-image-wrap">
+                    <img src="~/images/services/restaurant.jpg" asp-append-version="true" alt="Restaurants and cafe area with premium service" class="service-image" />
+                    <div class="service-image-overlay"></div>
+                </div>
+                <div class="service-content">
+                    <div class="service-top">
+                        <div class="service-title-ar">@Localizer["RestaurantsTitleAr"]</div>
+                        <div class="service-title-en">@Localizer["RestaurantsTitleEn"]</div>
+                    </div>
+                    <div class="service-description">@Localizer["RestaurantsDesc"]</div>
+                    <div class="service-features">
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["RestaurantsFeature1"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["RestaurantsFeature2"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["RestaurantsFeature3"]</div>
+                        <div class="service-feature"><span class="feature-check">✓</span>@Localizer["RestaurantsFeature4"]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
