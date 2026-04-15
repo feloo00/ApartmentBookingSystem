@@ -22,7 +22,7 @@
 ![MyBookings](screenshot/MyBooking.png)
 
 ### Admin Dashboard
-![Admin](screenshot/Dashboard.png)
+![Admin](screenshot/DashBoard.png)
 
 ### About Us
 ![About](screenshot/AboutUs.png)
